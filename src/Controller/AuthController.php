@@ -27,9 +27,8 @@ class AuthController extends AbstractController
                              SerializerInterface $serializer, ValidatorInterface $validator)
     {
         $values = json_decode($request->getContent());
-        if(isset($values->username,$values->password)) {
+        if(isset($values->email,$values->password)) {
             $user = new User();
-            $user->setUsername($values->username);
             $user->setEmail($values->email);
             $user->setPassword($passwordEncoder->encodePassword($user,
                 $values->password));
@@ -54,7 +53,7 @@ class AuthController extends AbstractController
         }
         $data = [
             'status' => 500,
-            'message' => 'Vous devez renseigner les clés usermail et
+            'message' => 'Vous devez renseigner les clés email et
 password'
         ];
         return new JsonResponse($data, 500);
@@ -67,7 +66,7 @@ password'
     {
         $user = $this->getUser();
         return $this->json([
-            'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
             'roles' => $user->getRoles()
         ]);
 

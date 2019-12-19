@@ -2,11 +2,9 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
-use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ApiResource()
@@ -22,9 +20,9 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180)
+     * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $username;
+    private $email;
 
     /**
      * @ORM\Column(type="json")
@@ -38,11 +36,6 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     */
-    private $email;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $dateCreation;
@@ -50,45 +43,23 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $photoProfil;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Voyage", mappedBy="userId", orphanRemoval=true)
-     */
-    private $voyages;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Commentaires", mappedBy="userId", orphanRemoval=true)
-     */
-    private $commentaires;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="users")
-     */
-    private $amis;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="amis")
-     */
-    private $users;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Voyage", inversedBy="users")
-     */
-    private $voyagesSuivis;
-
-    public function __construct()
-    {
-        $this->voyages = new ArrayCollection();
-        $this->commentaires = new ArrayCollection();
-        $this->amis = new ArrayCollection();
-        $this->users = new ArrayCollection();
-        $this->voyagesSuivis = new ArrayCollection();
-    }
+    private $photo;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
     }
 
     /**
@@ -98,14 +69,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
+        return (string) $this->email;
     }
 
     /**
@@ -159,18 +123,6 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
     public function getDateCreation(): ?\DateTimeInterface
     {
         return $this->dateCreation;
@@ -183,156 +135,14 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getPhotoProfil(): ?string
+    public function getPhoto(): ?string
     {
-        return $this->photoProfil;
+        return $this->photo;
     }
 
-    public function setPhotoProfil(?string $photoProfil): self
+    public function setPhoto(?string $photo): self
     {
-        $this->photoProfil = $photoProfil;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Voyage[]
-     */
-    public function getVoyages(): Collection
-    {
-        return $this->voyages;
-    }
-
-    public function addVoyage(Voyage $voyage): self
-    {
-        if (!$this->voyages->contains($voyage)) {
-            $this->voyages[] = $voyage;
-            $voyage->setUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeVoyage(Voyage $voyage): self
-    {
-        if ($this->voyages->contains($voyage)) {
-            $this->voyages->removeElement($voyage);
-            // set the owning side to null (unless already changed)
-            if ($voyage->getUserId() === $this) {
-                $voyage->setUserId(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Commentaires[]
-     */
-    public function getCommentaires(): Collection
-    {
-        return $this->commentaires;
-    }
-
-    public function addCommentaire(Commentaires $commentaire): self
-    {
-        if (!$this->commentaires->contains($commentaire)) {
-            $this->commentaires[] = $commentaire;
-            $commentaire->setUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommentaire(Commentaires $commentaire): self
-    {
-        if ($this->commentaires->contains($commentaire)) {
-            $this->commentaires->removeElement($commentaire);
-            // set the owning side to null (unless already changed)
-            if ($commentaire->getUserId() === $this) {
-                $commentaire->setUserId(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|self[]
-     */
-    public function getAmis(): Collection
-    {
-        return $this->amis;
-    }
-
-    public function addAmi(self $ami): self
-    {
-        if (!$this->amis->contains($ami)) {
-            $this->amis[] = $ami;
-        }
-
-        return $this;
-    }
-
-    public function removeAmi(self $ami): self
-    {
-        if ($this->amis->contains($ami)) {
-            $this->amis->removeElement($ami);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|self[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(self $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->addAmi($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(self $user): self
-    {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
-            $user->removeAmi($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Voyage[]
-     */
-    public function getVoyagesSuivis(): Collection
-    {
-        return $this->voyagesSuivis;
-    }
-
-    public function addVoyagesSuivi(Voyage $voyagesSuivi): self
-    {
-        if (!$this->voyagesSuivis->contains($voyagesSuivi)) {
-            $this->voyagesSuivis[] = $voyagesSuivi;
-        }
-
-        return $this;
-    }
-
-    public function removeVoyagesSuivi(Voyage $voyagesSuivi): self
-    {
-        if ($this->voyagesSuivis->contains($voyagesSuivi)) {
-            $this->voyagesSuivis->removeElement($voyagesSuivi);
-        }
+        $this->photo = $photo;
 
         return $this;
     }
