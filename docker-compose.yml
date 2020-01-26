@@ -1,0 +1,55 @@
+version: "3"
+services: 
+    web:
+        container_name: mynginx
+        image: nginx
+        ports:
+            - 3200:80
+        restart: always
+        volumes:
+            - "./public:/var/www/html"
+            - "./public/bundles:/var/www/html/public/bundles"
+            - "./default.conf:/etc/nginx/conf.d/default.conf"
+        networks: 
+            - myapp
+        depends_on:
+            - php
+    php:
+        container_name: php
+        image: nanoninja/php-fpm
+        volumes: 
+            - ".:/var/www/html"
+        restart: always
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        networks: 
+            - myapp
+    db:
+        container_name: mydb
+        image: mysql
+        ports:
+            - 3306:3306
+        environment: 
+            - MYSQL_ROOT_PASSWORD=root 
+            - MYSQL_USER=root 
+            - MYSQL_PASSWORD=root 
+            - MYSQL_DATABASE=packupapi
+        restart: always
+        networks: 
+            - myapp
+    myadmin:
+        container_name: phpmyadmin
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - 8000:80
+        environment: 
+            - PMA_HOST=mydb 
+        restart: always
+        depends_on: 
+            - db
+        networks: 
+            - myapp
+networks: 
+    myapp: 
+        driver: bridge
