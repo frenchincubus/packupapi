@@ -25,3 +25,12 @@ php bin/console assets:install -- public
 
 Finally launch app on localhost:3200/api
 
+
+* in case of problems with swagger,delete migrations file and redo : 
+```
+
+php bin/console make:migration
+doctrine:migrations:migrate
+```
+
+
