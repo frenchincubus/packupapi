@@ -96,6 +96,7 @@ class Voyage
         $this->commentaires = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->etapes = new ArrayCollection();
+        $this->setIsDeleted(false);
     }
 
     public function getId(): ?int

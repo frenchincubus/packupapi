@@ -183,18 +183,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getPhotoProfil(): ?string
-    {
-        return $this->photoProfil;
-    }
-
-    public function setPhotoProfil(?string $photoProfil): self
-    {
-        $this->photoProfil = $photoProfil;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Voyage[]
      */
