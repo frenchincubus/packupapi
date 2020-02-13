@@ -33,4 +33,10 @@ php bin/console make:migration
 doctrine:migrations:migrate
 ```
 
+* To generate the data in the database with DataFixtures : 
+```
+
+ php bin/console doctrine:fixtures:load
+```
+
 
