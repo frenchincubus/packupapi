@@ -33,6 +33,9 @@ class AppFixtures extends Fixture
         $userTest = new User();
         $userTest->setEmail($faker->email);
         $userTest->setRoles($userTest->getRoles());
+        $userTest->setNom($faker->text(15));
+        $userTest->setPrenom($faker->text(15));
+        $userTest->setAge($faker->numberBetween(18,80));
         $password = $this->encoder->encodePassword($userTest, 1234);
         $userTest->setPassword($password);
         $userTest->setDateCreation($faker->dateTime);
@@ -44,6 +47,9 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 10; $i++) {
             $user = new User();
             $user->setEmail($faker->email);
+            $user->setNom($faker->text(15));
+            $user->setPrenom($faker->text(15));
+            $user->setAge($faker->numberBetween(18,80));
             $password = $this->encoder->encodePassword($user, 1234);
             $user->setPassword($password);
             $user->setRoles($user->getRoles());
@@ -66,6 +72,7 @@ class AppFixtures extends Fixture
             $voyage->setPhoto($faker->imageUrl());
             $voyage->setPriorite(1);
             $voyage->setUserId($userTest);
+            $voyage->setNbPersonnes($faker->numberBetween(1,50));
             $manager->persist($voyage);
 
             for ($e = 0; $e < $faker->numberBetween(3,10); $e++) {

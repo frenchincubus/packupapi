@@ -91,6 +91,11 @@ class Voyage
      */
     private $etapes;
 
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $nbPersonnes;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
@@ -322,6 +327,18 @@ class Voyage
                 $etape->setVoyageId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNbPersonnes(): ?int
+    {
+        return $this->nbPersonnes;
+    }
+
+    public function setNbPersonnes(?int $nbPersonnes): self
+    {
+        $this->nbPersonnes = $nbPersonnes;
 
         return $this;
     }

@@ -72,6 +72,21 @@ class User implements UserInterface
      */
     private $voyagesSuivis;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $prenom;
+
+    /**
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $age;
+
     public function __construct()
     {
         $this->voyages = new ArrayCollection();
@@ -321,5 +336,41 @@ class User implements UserInterface
         if ($this->voyagesSuivis->contains($voyagesSuivi)) {
             $this->voyagesSuivis->removeElement($voyagesSuivi);
         }
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(?string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getAge(): ?int
+    {
+        return $this->age;
+    }
+
+    public function setAge(?int $age): self
+    {
+        $this->age = $age;
+
+        return $this;
     }
 }
