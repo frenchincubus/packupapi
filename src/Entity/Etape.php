@@ -41,11 +41,6 @@ class Etape
     private $ville;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $latitude;
-
-    /**
      * @ORM\Column(type="array")
      */
     private $coordinates = [];
@@ -135,18 +130,6 @@ class Etape
     public function setVille(?string $ville): self
     {
         $this->ville = $ville;
-
-        return $this;
-    }
-
-    public function getLatitude(): ?string
-    {
-        return $this->latitude;
-    }
-
-    public function setLatitude(string $latitude): self
-    {
-        $this->latitude = $latitude;
 
         return $this;
     }
