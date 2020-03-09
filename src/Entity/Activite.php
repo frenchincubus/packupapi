@@ -54,6 +54,11 @@ class Activite
      */
     private $etapeId;
 
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $photo = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -146,6 +151,18 @@ class Activite
     public function setTypeTransport($typeTransport)
     {
         $this->typeTransport = $typeTransport;
+        return $this;
+    }
+
+    public function getPhoto(): ?array
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?array $photo): self
+    {
+        $this->photo = $photo;
+
         return $this;
     }
 
