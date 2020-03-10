@@ -47,12 +47,9 @@ class AuthController extends AbstractController
             $data = [
                 'status' => 201,
                 'message' => 'L\'utilisateur a été créé',
-                'user' => json([
-                    'email' => $user->getEmail(),
-                    'id' => $user->getId(),
-                    'username' => $user->getUsername()
-                ])
+                'user' => "poer poer poer"
             ];
+
 
             return new JsonResponse($data, 201);
         }
