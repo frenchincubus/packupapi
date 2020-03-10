@@ -1,12 +1,12 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('DeleteDockers') {
             steps {
-                sh 'docker-compose build'
+                sh 'docker rm -f $(docker ps -a -q)'
             }
         }
-        stage('Mount') {
+        stage('Build') {
             steps {
                 sh 'docker-compose up -d'
             }
