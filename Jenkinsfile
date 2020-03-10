@@ -13,7 +13,7 @@ pipeline {
         }
            stage('Php Image') {
             steps {
-                sh 'docker exec -it php bash'
+                sh 'docker exec -t php bash'
             }
         }
                    stage('Composer') {
