@@ -25,6 +25,8 @@ services:
             dockerfile: Dockerfile
         networks: 
             - myapp
+        depends_on:
+            - db
     db:
         container_name: mydb
         image: mysql
