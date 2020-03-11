@@ -23,7 +23,7 @@ pipeline {
         }
         stage('DataFixtures ') {
             steps {
-                sh 'php bin/console doctrine:fixtures:load'
+                sh 'docker exec php php bin/console doctrine:fixtures:load'
             }
      }
     }
