@@ -21,10 +21,5 @@ pipeline {
                 sh 'docker exec php php bin/console assets:install -- public'
             }
         }
-        stage('DataFixtures ') {
-            steps {
-                sh 'docker exec php php bin/console doctrine:fixtures:load'
-            }
-        }
     }
 }
