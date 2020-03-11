@@ -21,6 +21,5 @@ pipeline {
                 sh 'docker exec php php bin/console assets:install -- public'
             }
         }
-     }
     }
 }
