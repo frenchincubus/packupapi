@@ -11,11 +11,6 @@ pipeline {
                 sh 'docker-compose up -d'
             }
         }
-         stage('delete cache') {
-            steps {
-                sh 'docker exec php php bin/console cache:clear '
-            }
-        }
         stage('Composer') {
             steps {
                 sh 'docker exec php composer install'
@@ -26,5 +21,10 @@ pipeline {
                 sh 'docker exec php php bin/console assets:install -- public'
             }
         }
+        stage('DataFixtures ') {
+            steps {
+                sh 'php bin/console doctrine:fixtures:load'
+            }
+     }
     }
 }
