@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -63,13 +64,27 @@ password'
     /**
      * @Route("/login", name="login", methods={"POST"})
      */
-    public function login(Request $request)
+    public function login(Request $request, UserRepository $repository, UserPasswordEncoderInterface
+    $passwordEncoder)
     {
-        $user = $this->getUser();
-        return $this->json([
-            'email' => $user->getEmail(),
-            'roles' => $user->getRoles()
+        
+        $req = json_decode($request->getContent());
+        $user = $repository->findOneByMail($req->email);
+        if ($this->checkCredentials($req, $user, $passwordEncoder))
+            return $this->json([
+                'id' => $user->getId(),
+                'email' => $user->getEmail(),
+                'roles' => $user->getRoles()
+            ]);
+        else return $this->json([
+            'error' => 'credentials error'
         ]);
 
+    }
+
+    public function checkCredentials($credentials, $user, UserPasswordEncoderInterface
+    $passwordEncoder)
+    {
+        return $passwordEncoder->isPasswordValid($user, $credentials->password);
     }
 }
