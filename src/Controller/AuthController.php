@@ -35,6 +35,9 @@ class AuthController extends AbstractController
                 $values->password));
             $user->setRoles($user->getRoles());
             $user->setDateCreation(new \DateTime());
+            $user->setNom($values->nom);
+            $user->setPrenom($values->prenom);
+            $user->setAge($values->age);
             $errors = $validator->validate($user);
             if(count($errors)) {
                 $errors = $serializer->serialize($errors, 'json');
