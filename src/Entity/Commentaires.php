@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={
+ *      "normalization_context"={"groups"={"commentaire"}}
+ * })
  * @ORM\Entity(repositoryClass="App\Repository\CommentairesRepository")
  */
 class Commentaires
@@ -15,11 +18,13 @@ class Commentaires
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("commentaire")
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"commentaire", "user", "voyage"})
      */
     private $message;
 
@@ -31,6 +36,7 @@ class Commentaires
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="commentaires")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"user","commentaire", "voyage"})
      */
     private $userId;
 

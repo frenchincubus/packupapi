@@ -6,9 +6,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={
+ *      "normalization_context"={"groups"={"voyage"}}
+ * })
  * @ORM\Entity(repositoryClass="App\Repository\VoyageRepository")
  */
 class Voyage
@@ -22,77 +26,93 @@ class Voyage
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"voyage", "user"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"voyage", "user"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"voyage", "user"})
      */
     private $dateDebut;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"voyage", "user"})
      */
     private $dateFin;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Groups({"voyage", "user"})
      */
     private $budget;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"voyage", "user"})
      */
     private $photo;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"voyage", "user"})
      */
     private $datePublication;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"voyage", "user"})
      */
     private $priorite;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"voyage", "user"})
      */
     private $isDeleted;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"voyage", "user"})
      */
     private $isPublic;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="voyages")
      * @ORM\JoinColumn(nullable=false)
+     * @ApiSubresource
+     * @Groups("voyage")
      */
     private $userId;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Commentaires", mappedBy="voyageId", orphanRemoval=true)
+     * @Groups("voyage")
      */
     private $commentaires;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="voyagesSuivis")
+     * @Groups("voyage")
      */
     private $users;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Etape", mappedBy="voyageId", orphanRemoval=true)
+     * @Groups("voyage")
      */
     private $etapes;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @Groups("voyage")
      */
     private $nbPersonnes;
 

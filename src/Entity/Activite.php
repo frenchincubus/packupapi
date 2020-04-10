@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource()
@@ -15,36 +16,43 @@ class Activite
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("voyage")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("voyage")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups("voyage")
      */
     private $description;
 
     /**
      * @ORM\Column(type="array")
+     * @Groups("voyage")
      */
     private $coordinates = [];
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("voyage")
      */
     private $dateDebut;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("voyage")
      */
     private $dateFin;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("voyage")
      */
     private $typeTransport;
 
@@ -56,6 +64,7 @@ class Activite
 
     /**
      * @ORM\Column(type="array", nullable=true)
+     * @Groups("voyage")
      */
     private $photo = [];
 
