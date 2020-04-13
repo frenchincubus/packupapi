@@ -67,22 +67,25 @@ class User implements UserInterface
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="users")
+     * @Groups("user")
      */
     private $amis;
 
      /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="amis")
+     * @Groups("user")
      */
     private $users;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Voyage", inversedBy="users")
+     * @Groups("user")
      */
     private $voyagesSuivis;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"voyage", "user", "commentaire"})
+     * @Groups({"voyage", "user", "commentaire", "user"})
      */
     private $nom;
 
