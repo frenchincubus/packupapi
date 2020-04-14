@@ -21,6 +21,7 @@ class Voyage
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"voyage", "user"})
      */
     private $id;
 
@@ -112,7 +113,7 @@ class Voyage
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @Groups("voyage")
+     * @Groups({"voyage", "user"})
      */
     private $nbPersonnes;
 

@@ -8,6 +8,7 @@
 /var/
 /vendor/
 /.idea/
+/.scannerwork
 ###< symfony/framework-bundle ###
 
 ###> lexik/jwt-authentication-bundle ###
