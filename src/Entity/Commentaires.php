@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ApiResource(attributes={
@@ -24,7 +25,8 @@ class Commentaires
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"commentaire", "user", "voyage"})
+     * @Groups({"commentaire", "user:read", "voyage:read"})
+     * @MaxDepth(1)
      */
     private $message;
 
@@ -36,7 +38,8 @@ class Commentaires
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="commentaires")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"user","commentaire", "voyage"})
+     * @Groups({"user:read","commentaire", "voyage:read"})
+     * @MaxDepth(1)
      */
     private $userId;
 

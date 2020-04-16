@@ -16,55 +16,56 @@ class Activite
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="array")
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
      */
     private $coordinates = [];
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
      */
     private $dateDebut;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
      */
     private $dateFin;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
      */
     private $typeTransport;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etape", inversedBy="activites")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("voyage:read")
      */
     private $etapeId;
 
     /**
      * @ORM\Column(type="array", nullable=true)
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
      */
     private $photo = [];
 
