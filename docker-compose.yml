@@ -35,7 +35,7 @@ services:
         environment: 
             - MYSQL_ROOT_PASSWORD=root 
             - MYSQL_USER=root 
-            - MYSQL_PASSWORD=root 
+            - MYSQL_PASSWORD=packup-CDNT4 
             - MYSQL_DATABASE=packupapi
         restart: always
         networks: 
