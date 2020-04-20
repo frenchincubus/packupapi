@@ -7,8 +7,6 @@ use App\Entity\Commentaires;
 use App\Entity\Etape;
 use App\Entity\User;
 use App\Entity\Voyage;
-use App\Repository\UserRepository;
-use DateInterval;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -29,26 +27,40 @@ class AppFixtures extends Fixture
         /** BUNDLE FAKER */
         $faker = Faker\Factory::create('fr_FR');
 
-        /** USERTEST */
+        /** USER TEST */
         $userTest = new User();
-        $userTest->setEmail($faker->email);
+        $userTest->setEmail("test@gmail.fr");
         $userTest->setRoles($userTest->getRoles());
-        $userTest->setNom($faker->text(15));
-        $userTest->setPrenom($faker->text(15));
+        $userTest->setNom("test");
+        $userTest->setPrenom("test");
         $userTest->setAge($faker->numberBetween(18,80));
-        $password = $this->encoder->encodePassword($userTest, 1234);
+        $password = $this->encoder->encodePassword($userTest, "test");
         $userTest->setPassword($password);
         $userTest->setDateCreation($faker->dateTime);
         $userTest->setPhoto($faker->imageUrl());
         $manager->persist($userTest);
         $manager->flush();
 
+        /** USER ADMIN */
+        $userAdmin = new User();
+        $userAdmin->setEmail("admin@gmail.com");
+        $userAdmin->setRoles(["ROLE_ADMIN"]);
+        $userAdmin->setNom("admin");
+        $userAdmin->setPrenom("admin");
+        $userAdmin->setAge(37);
+        $passwordadmin = $this->encoder->encodePassword($userAdmin, "admin");
+        $userAdmin->setPassword($passwordadmin);
+        $userAdmin->setDateCreation(new \DateTime());
+        $manager->persist($userAdmin);
+        $manager->flush();
+
+
         /** GENERATE 10 RANDOM USERS */
         for ($i = 0; $i < 10; $i++) {
             $user = new User();
             $user->setEmail($faker->email);
-            $user->setNom($faker->text(15));
-            $user->setPrenom($faker->text(15));
+            $user->setNom($faker->name);
+            $user->setPrenom($faker->firstName);
             $user->setAge($faker->numberBetween(18,80));
             $password = $this->encoder->encodePassword($user, 1234);
             $user->setPassword($password);
@@ -117,6 +129,8 @@ class AppFixtures extends Fixture
                 }
             }
         }
+        $userTest->addUser($userAdmin);
+
         $manager->flush();
 
 

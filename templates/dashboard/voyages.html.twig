@@ -1,0 +1,62 @@
+{% extends 'dashboard/index.html.twig' %}
+
+{% block stylesheetsMain %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
+{% endblock %}
+
+{% block main %}
+
+    <div>
+        <table id="example" class="display" style="width:100%">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">nom</th>
+                <th scope="col">utilisateur</th>
+                <th scope="col">début</th>
+                <th scope="col">fin</th>
+                <th scope="col">publication</th>
+                <th scope="col">status</th>
+                <th scope="col">public</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for voyage in voyages %}
+                <tr>
+                    <th scope="row">{{ voyage.id }}</th>
+                    <td>{{ voyage.name }}</td>
+                    <td>{{ voyage.userId.username }}</td>
+                    <td>{{ voyage.dateDebut | date('d/m/y h:i:s') }}</td>
+                    <td>{{ voyage.dateFin | date('d/m/y h:i:s') }}</td>
+                    <td>{{ voyage.datePublication | date('d/m/y h:i:s') }}</td>
+
+                    {% if voyage.isDeleted %}
+                        <td><span class="badge badge-danger">supprimé</span></td>
+                    {% else %}
+                        <td><span class="badge badge-success">actif</span></td>
+                    {% endif %}
+
+                    {% if voyage.isPublic %}
+                        <td><span class="badge badge-primary">public</span></td>
+                    {% else %}
+                        <td><span class="badge badge-warning">no public</span></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}
+
+{% block javascriptsMain %}
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+
+{% endblock %}

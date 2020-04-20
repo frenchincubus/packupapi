@@ -1,0 +1,43 @@
+{% extends 'dashboard/index.html.twig' %}
+
+{% block stylesheetsMain %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
+{% endblock %}
+
+{% block main %}
+
+    <div>
+        <table id="example" class="display" style="width:100%">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">utilisateur</th>
+                <th scope="col">Voyage</th>
+                <th scope="col">publication</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for commentaire in commentaires %}
+                <tr>
+                    <th scope="row">{{ commentaire.id }}</th>
+                    <td>{{ commentaire.userId.username }}</td>
+                    <td>{{ commentaire.voyageId.name }}</td>
+                    <td>{{ commentaire.datePublication | date('d/m/y h:i:s') }}</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
+
+{% block javascriptsMain %}
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'dashboard/index.html.twig' %}
+
+{% block stylesheetsMain %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
+{% endblock %}
+
+{% block main %}
+
+    <div>
+        <table id="example" class="display" style="width:100%">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">nom</th>
+                <th scope="col">prenom</th>
+                <th scope="col">email</th>
+                <th scope="col">roles</th>
+                <th scope="col">date de création</th>
+                <th scope="col">actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <th scope="row">{{ user.id }}</th>
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.prenom }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.roles|join('|') }}</td>
+                    <td>{{ user.dateCreation | date('d/m/y h:i:s') }}</td>
+                    <td><a href="{{ path('user_details', {id:user.id}) }}"><span class="badge badge-warning">consulter</span></a></td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}
+
+{% block javascriptsMain %}
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+        } );
+    </script>
+
+{% endblock %}

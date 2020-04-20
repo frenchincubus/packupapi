@@ -1,0 +1,52 @@
+{% extends 'dashboard/index.html.twig' %}
+
+{% block stylesheetsMain %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
+{% endblock %}
+
+{% block main %}
+
+    <div>
+        <table id="example" class="display" style="width:100%">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">nom</th>
+                <th scope="col">voyage</th>
+                <th scope="col">utilisateur</th>
+                <th scope="col">début</th>
+                <th scope="col">fin</th>
+                <th scope="col">pays</th>
+                <th scope="col">ville</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for etape in etapes %}
+                <tr>
+                    <th scope="row">{{ etape.id }}</th>
+                    <td>{{ etape.name }}</td>
+                    <td>{{ etape.voyageId.name }}</td>
+                    <td>{{ etape.voyageId.userId.username }}</td>
+                    <td>{{ etape.dateDebut | date('d/m/y h:i:s') }}</td>
+                    <td>{{ etape.dateFin | date('d/m/y h:i:s') }}</td>
+                    <td>{{ etape.pays }}</td>
+                    <td>{{ etape.ville }}</td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}
+
+{% block javascriptsMain %}
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+
+{% endblock %}

@@ -217,6 +217,10 @@ class User implements UserInterface
         return $this->voyages;
     }
 
+    /**
+     * @param Voyage $voyage
+     * @return $this
+     */
     public function addVoyage(Voyage $voyage): self
     {
         if (!$this->voyages->contains($voyage)) {
@@ -227,6 +231,10 @@ class User implements UserInterface
          return $this;
     }
 
+    /**
+     * @param Voyage $voyage
+     * @return $this
+     */
     public function removeVoyage(Voyage $voyage): self
     {
         if ($this->voyages->contains($voyage)) {
@@ -248,6 +256,10 @@ class User implements UserInterface
         return $this->commentaires;
     }
 
+    /**
+     * @param Commentaires $commentaire
+     * @return $this
+     */
     public function addCommentaire(Commentaires $commentaire): self
     {
         if (!$this->commentaires->contains($commentaire)) {
@@ -258,6 +270,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Commentaires $commentaire
+     * @return $this
+     */
     public function removeCommentaire(Commentaires $commentaire): self
     {
         if ($this->commentaires->contains($commentaire)) {
@@ -315,6 +331,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param User $user
+     * @return $this
+     */
     public function removeUser(self $user): self
     {
         if ($this->users->contains($user)) {
@@ -342,6 +362,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Voyage $voyagesSuivi
+     * @return $this
+     */
     public function removeVoyagesSuivi(Voyage $voyagesSuivi): self
     {
         if ($this->voyagesSuivis->contains($voyagesSuivi)) {
@@ -383,5 +407,13 @@ class User implements UserInterface
         $this->age = $age;
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function __toString()
+    {
+        return $this->getEmail();
     }
 }

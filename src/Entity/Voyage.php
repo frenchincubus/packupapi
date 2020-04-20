@@ -269,6 +269,10 @@ class Voyage
         return $this->commentaires;
     }
 
+    /**
+     * @param Commentaires $commentaire
+     * @return $this
+     */
     public function addCommentaire(Commentaires $commentaire): self
     {
         if (!$this->commentaires->contains($commentaire)) {
@@ -279,6 +283,10 @@ class Voyage
         return $this;
     }
 
+    /**
+     * @param Commentaires $commentaire
+     * @return $this
+     */
     public function removeCommentaire(Commentaires $commentaire): self
     {
         if ($this->commentaires->contains($commentaire)) {
@@ -300,6 +308,10 @@ class Voyage
         return $this->users;
     }
 
+    /**
+     * @param User $user
+     * @return $this
+     */
     public function addUser(User $user): self
     {
         if (!$this->users->contains($user)) {
@@ -310,6 +322,10 @@ class Voyage
         return $this;
     }
 
+    /**
+     * @param User $user
+     * @return $this
+     */
     public function removeUser(User $user): self
     {
         if ($this->users->contains($user)) {
@@ -328,6 +344,10 @@ class Voyage
         return $this->etapes;
     }
 
+    /**
+     * @param Etape $etape
+     * @return $this
+     */
     public function addEtape(Etape $etape): self
     {
         if (!$this->etapes->contains($etape)) {
@@ -338,6 +358,10 @@ class Voyage
         return $this;
     }
 
+    /**
+     * @param Etape $etape
+     * @return $this
+     */
     public function removeEtape(Etape $etape): self
     {
         if ($this->etapes->contains($etape)) {
@@ -351,15 +375,30 @@ class Voyage
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getNbPersonnes(): ?int
     {
         return $this->nbPersonnes;
     }
 
+    /**
+     * @param int|null $nbPersonnes
+     * @return $this
+     */
     public function setNbPersonnes(?int $nbPersonnes): self
     {
         $this->nbPersonnes = $nbPersonnes;
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

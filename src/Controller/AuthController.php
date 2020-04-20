@@ -22,10 +22,15 @@ class AuthController extends AbstractController
 {
     /**
      * @Route("/register", name="register", methods={"POST"})
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param EntityManagerInterface $entityManager
+     * @param SerializerInterface $serializer
+     * @param ValidatorInterface $validator
+     * @return JsonResponse|Response
+     * @throws \Exception
      */
-    public function register(Request $request, UserPasswordEncoderInterface
-    $passwordEncoder, EntityManagerInterface $entityManager,
-                             SerializerInterface $serializer, ValidatorInterface $validator)
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager, SerializerInterface $serializer, ValidatorInterface $validator)
     {
         $values = json_decode($request->getContent());
         if(isset($values->email,$values->password)) {
@@ -66,9 +71,12 @@ password'
 
     /**
      * @Route("/login", name="login", methods={"POST"})
+     * @param Request $request
+     * @param UserRepository $repository
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @return JsonResponse
      */
-    public function login(Request $request, UserRepository $repository, UserPasswordEncoderInterface
-    $passwordEncoder)
+    public function login(Request $request, UserRepository $repository, UserPasswordEncoderInterface $passwordEncoder)
     {
         
         $req = json_decode($request->getContent());
@@ -85,8 +93,7 @@ password'
 
     }
 
-    public function checkCredentials($credentials, $user, UserPasswordEncoderInterface
-    $passwordEncoder)
+    public function checkCredentials($credentials, $user, UserPasswordEncoderInterface $passwordEncoder)
     {
         return $passwordEncoder->isPasswordValid($user, $credentials->password);
     }
