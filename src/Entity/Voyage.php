@@ -116,7 +116,7 @@ class Voyage
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="voyagesSuivis")
-     * @Groups({"voyage:read", "voyage:write", "user:write"})
+     * @Groups({"voyage:read", "voyage:write")
      * @MaxDepth(1)
      */
     private $users;
