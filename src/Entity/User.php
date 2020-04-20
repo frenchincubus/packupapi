@@ -92,7 +92,7 @@ class User implements UserInterface
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Voyage", inversedBy="users")
      * @Groups({"user:read", "user:write"})
-     * @MaxDepth(2)
+     * @MaxDepth(1)
      */
     private $voyagesSuivis;
 
