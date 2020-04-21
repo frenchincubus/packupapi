@@ -88,6 +88,13 @@ class Etape
      */
     private $activites;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateModification;
+
+
+
     public function __construct()
     {
         $this->activites = new ArrayCollection();
@@ -217,6 +224,26 @@ class Etape
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDateModification()
+    {
+        return $this->dateModification;
+    }
+
+    /**
+     * @param mixed $dateModification
+     * @return Etape
+     */
+    public function setDateModification($dateModification)
+    {
+        $this->dateModification = $dateModification;
+        return $this;
+    }
+
+
 
     /**
      * @return Collection|Activite[]

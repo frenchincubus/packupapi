@@ -31,7 +31,7 @@
                     <td>{{ voyage.datePublication | date('d/m/y h:i:s') }}</td>
 
                     {% if voyage.isDeleted %}
-                        <td><span class="badge badge-danger">supprimé</span></td>
+                        <td><span class="badge badge-danger">fermé</span></td>
                     {% else %}
                         <td><span class="badge badge-success">actif</span></td>
                     {% endif %}
@@ -39,7 +39,7 @@
                     {% if voyage.isPublic %}
                         <td><span class="badge badge-primary">public</span></td>
                     {% else %}
-                        <td><span class="badge badge-warning">no public</span></td>
+                        <td><span class="badge badge-warning">privé</span></td>
                     {% endif %}
                 </tr>
             {% endfor %}

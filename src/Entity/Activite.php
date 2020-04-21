@@ -68,6 +68,13 @@ class Activite
      */
     private $photo = [];
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateModification;
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -174,6 +181,26 @@ class Activite
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDateModification()
+    {
+        return $this->dateModification;
+    }
+
+    /**
+     * @param mixed $dateModification
+     * @return Activite
+     */
+    public function setDateModification($dateModification)
+    {
+        $this->dateModification = $dateModification;
+        return $this;
+    }
+
+
 
     /**
      * @return string|null

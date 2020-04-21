@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -47,6 +48,16 @@ class User implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $dateCreation;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastLogin;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateModification;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -105,6 +116,9 @@ class User implements UserInterface
         $this->amis = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->voyagesSuivis = new ArrayCollection();
+        $this->setLastLogin(new DateTime());
+        $this->setDateCreation(new DateTime());
+        $this->setDateModification(new DateTime());
     }
 
     public function getId(): ?int
@@ -196,6 +210,26 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDateModification()
+    {
+        return $this->dateModification;
+    }
+
+    /**
+     * @param mixed $dateModification
+     * @return User
+     */
+    public function setDateModification($dateModification)
+    {
+        $this->dateModification = $dateModification;
+        return $this;
+    }
+
+
 
     public function getPhoto(): ?string
     {
@@ -408,6 +442,26 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
+    }
+
+    /**
+     * @param mixed $lastLogin
+     * @return User
+     */
+    public function setLastLogin($lastLogin)
+    {
+        $this->lastLogin = $lastLogin;
+        return $this;
+    }
+
+
 
     /**
      * @return string|null

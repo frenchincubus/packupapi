@@ -67,6 +67,11 @@ class Voyage
     private $datePublication;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $dateModification;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      * @Groups({"voyage", "user"})
      */
@@ -212,6 +217,26 @@ class Voyage
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDateModification()
+    {
+        return $this->dateModification;
+    }
+
+    /**
+     * @param mixed $dateModification
+     * @return Voyage
+     */
+    public function setDateModification($dateModification)
+    {
+        $this->dateModification = $dateModification;
+        return $this;
+    }
+
+
 
     public function getPriorite(): ?int
     {

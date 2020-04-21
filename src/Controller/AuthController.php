@@ -40,6 +40,7 @@ class AuthController extends AbstractController
                 $values->password));
             $user->setRoles($user->getRoles());
             $user->setDateCreation(new \DateTime());
+            $user->setLastLogin(new \DateTime());
             $user->setNom($values->nom);
             $user->setPrenom($values->prenom);
             $user->setAge($values->age);
@@ -63,8 +64,7 @@ class AuthController extends AbstractController
         }
         $data = [
             'status' => 500,
-            'message' => 'Vous devez renseigner les clés email et
-password'
+            'message' => 'Vous devez renseigner les clés email et password'
         ];
         return new JsonResponse($data, 500);
     }
@@ -93,8 +93,13 @@ password'
 
     }
 
-    public function checkCredentials($credentials, $user, UserPasswordEncoderInterface $passwordEncoder)
+    public function checkCredentials($credentials,User $user, UserPasswordEncoderInterface $passwordEncoder)
     {
+//        $user->setLastLogin(new \DateTime());
+//        $em = $this->getDoctrine()->getManager();
+//        $em->persist($user);
+//        $em->flush();
+
         return $passwordEncoder->isPasswordValid($user, $credentials->password);
     }
 }

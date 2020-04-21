@@ -9,53 +9,43 @@
     <div class="container bootstrap snippet">
         <div class="row">
             <div class="col-sm-10"><h1>{{ user.email }}</h1></div>
-{#            <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.gravatar.com/avatar/28fd20ccec6865e2d5f0e1f4446eb7bf?s=100"></a></div>#}
         </div>
         <br>
         <div class="row">
             <div class="col-sm-3"><!--left col-->
 
+                {# ----- PROFIL ----- #}
                 <ul class="list-group">
-                    <li class="list-group-item list-group-item-secondary">Profil </li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Id: </strong></span> {{ user.id }}</li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Nom Prénom: </strong></span> {{ user.nom }} {{ user.prenom }}</li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Créé le: </strong></span> {{ user.dateCreation | date('d/m/y à h:i:s') }}</li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Rôles: </strong>{{ user.roles|join('|') }}</li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Age: </strong>{{ user.age }} ans</span></li>
+                    <li class="list-group-item list-group-item-secondary"><strong>Profil</strong> </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Id: <span>{{ user.id }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Nom Prénom:  <span>{{ user.nom }} {{ user.prenom }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Créé le: <span> {{ user.dateCreation | date('d/m/y à h:i:s') }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Rôles: <span>{{ user.roles|join('|') }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Age: <span>{{ user.age }} ans</span></li>
 
                 </ul>
                 <br>
 
-{#                <div class="panel panel-default">#}
-{#                    <div class="panel-heading">Website <i class="fa fa-link fa-1x"></i></div>#}
-{#                    <div class="panel-body"><a href="http://bootnipets.com">bootnipets.com</a></div>#}
-{#                </div>#}
-
-
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-secondary">Activité <i class="fa fa-dashboard fa-1x"></i></li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Voyages </strong></span><span class="badge badge-primary">{{ user.voyages|length }}</span></li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Voyages suivis </strong></span><span class="badge badge-danger">{{ user.voyagesSuivis|length }}</span></li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Amis </strong></span><span class="badge badge-success">{{ user.users|length }}</span></li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Followers </strong></span><span class="badge badge-info">{{ user.amis|length }}</span></li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Commentaires </strong></span><span class="badge badge-warning">{{ user.commentaires|length }}</span></li>
-{#                    <li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> 78</li>#}
+               {# ----- ACTIVITE ----- #}
+                <ul class="list-group mb-5">
+                    <li class="list-group-item list-group-item-secondary"><strong>Activité</strong> <i class="fa fa-dashboard fa-1x"></i></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center"><span class="pull-left">Voyages</span><span class="badge badge-primary">{{ user.voyages|length }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center"><span class="pull-left">Voyages suivis</span><span class="badge badge-danger">{{ user.voyagesSuivis|length }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center"><span class="pull-left">Amis </span><span class="badge badge-success">{{ user.users|length }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center"><span class="pull-left">Followers</span><span class="badge badge-info">{{ user.amis|length }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center"><span class="pull-left">Commentaires</span><span class="badge badge-warning">{{ user.commentaires|length }}</span></li>
                 </ul>
-
-{#                <div class="panel panel-default">#}
-{#                    <div class="panel-heading">Social Media</div>#}
-{#                    <div class="panel-body">#}
-{#                        <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>#}
-{#                    </div>#}
-{#                </div>#}
+                <br>
 
             </div><!--/col-3-->
             <div class="col-sm-9">
 
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-amis-tab" data-toggle="tab" href="#nav-amis" role="tab" aria-controls="nav-amis" aria-selected="false">Amis</a>
-                        <a class="nav-item nav-link" id="nav-voyages-tab" data-toggle="tab" href="#nav-voyages" role="tab" aria-controls="nav-voyages" aria-selected="true">Voyages</a>
+                        <a class="nav-item nav-link active" id="nav-voyages-tab" data-toggle="tab" href="#nav-voyages" role="tab" aria-controls="nav-voyages" aria-selected="true">Voyages</a>
+                        <a class="nav-item nav-link" id="nav-voyagesSuivis-tab" data-toggle="tab" href="#nav-voyagesSuivis" role="tab" aria-controls="nav-voyagesSuivis" aria-selected="true">Voyages suivis</a>
+                        <a class="nav-item nav-link" id="nav-amis-tab" data-toggle="tab" href="#nav-amis" role="tab" aria-controls="nav-amis" aria-selected="false">Amis</a>
+                        <a class="nav-item nav-link" id="nav-followers-tab" data-toggle="tab" href="#nav-followers" role="tab" aria-controls="nav-followers" aria-selected="false">Followers</a>
                         <a class="nav-item nav-link" id="nav-commentaires-tab" data-toggle="tab" href="#nav-commentaires" role="tab" aria-controls="nav-commentaires" aria-selected="false">Commentaires</a>
                     </div>
                 </nav>
@@ -63,7 +53,7 @@
                 <div class="tab-content" id="nav-tabContent">
 
                     {# ----- AMIS ----- #}
-                    <div class="tab-pane fade show active" id="nav-amis" role="tabpanel" aria-labelledby="nav-amis-tab">
+                    <div class="tab-pane fade" id="nav-amis" role="tabpanel" aria-labelledby="nav-amis-tab">
 
                         <br>
                         <div>
@@ -94,8 +84,38 @@
                     </div>
                     {# ----- FIN AMIS ----- #}
 
+                    {# ----- FOLLOWERS ----- #}
+                    <div class="tab-pane fade" id="nav-followers" role="tabpanel" aria-labelledby="nav-followers-tab">
+                        <br>
+                        <div>
+                            <table id="followers" class="display" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">nom prenom</th>
+
+                                    <th scope="col">email</th>
+                                    <th scope="col">actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for follower in user.amis %}
+                                    <tr>
+                                        <th scope="row">{{ follower.id }}</th>
+                                        <td>{{ follower.prenom}} {{ follower.nom }}</td>
+                                        <td>{{ follower.email }}</td>
+                                        <td><a href="{{ path('user_details',{id:follower.id}) }}"><span class="badge badge-warning">consulter</span></a></td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {# ----- FIN FOLLOWERS ----- #}
+
                     {# ----- VOYAGES ----- #}
-                    <div class="tab-pane fade" id="nav-voyages" role="tabpanel" aria-labelledby="nav-voyages-tab">
+                    <div class="tab-pane fade show active" id="nav-voyages" role="tabpanel" aria-labelledby="nav-voyages-tab">
                         <br>
                         <div>
                             <table id="voyages" class="display" style="width:100%">
@@ -142,6 +162,52 @@
                     </div>
                     {# ----- FIN VOYAGES ----- #}
 
+                    <div class="tab-pane fade" id="nav-voyagesSuivis" role="tabpanel" aria-labelledby="nav-voyagesSuivis-tab">
+                        <br>
+                        <div>
+                            <table id="voyagesSuivis" class="display" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">nom</th>
+
+                                    <th scope="col">début</th>
+                                    <th scope="col">fin</th>
+                                    <th scope="col">publication</th>
+                                    <th scope="col">status</th>
+                                    <th scope="col">public</th>
+                                    <th scope="col">actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for voyagesuivi in user.voyagesSuivis %}
+                                    <tr>
+                                        <th scope="row">{{ voyagesuivi.id }}</th>
+                                        <td>{{ voyagesuivi.name }}</td>
+                                        <td>{{ voyagesuivi.dateDebut | date('d/m/y h:i:s') }}</td>
+                                        <td>{{ voyagesuivi.dateFin | date('d/m/y h:i:s') }}</td>
+                                        <td>{{ voyagesuivi.datePublication | date('d/m/y h:i:s') }}</td>
+
+                                        {% if voyagesuivi.isDeleted %}
+                                            <td><span class="badge badge-danger">supprimé</span></td>
+                                        {% else %}
+                                            <td><span class="badge badge-success">actif</span></td>
+                                        {% endif %}
+
+                                        {% if voyagesuivi.isPublic %}
+                                            <td><span class="badge badge-primary">public</span></td>
+                                        {% else %}
+                                            <td><span class="badge badge-warning">no public</span></td>
+                                        {% endif %}
+                                        <td><a href="{{ path('voyage_details',{id:voyagesuivi.id}) }}"><span class="badge badge-warning">consulter</span></a></td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
 
                     {# ----- COMMENTAIRES ----- #}
                     <div class="tab-pane fade" id="nav-commentaires" role="tabpanel" aria-labelledby="nav-commentaires-tab">
@@ -154,6 +220,7 @@
                                     <th scope="col">id</th>
                                     <th scope="col">Voyage</th>
                                     <th scope="col">publication</th>
+                                    <th scope="col">actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -162,6 +229,11 @@
                                         <th scope="row">{{ commentaire.id }}</th>
                                         <td>{{ commentaire.voyageId.name }}</td>
                                         <td>{{ commentaire.datePublication | date('d/m/y h:i:s') }}</td>
+                                        <td>
+                                            <a href="{{ path('voyage_details',{id:commentaire.voyageId.id}) }}"><span class="badge badge-primary">consulter voyage</span></a>
+                                            <a href=""><span class="badge badge-success">editer</span></a>
+                                        </td>
+
                                     </tr>
                                 {% endfor %}
 
@@ -192,6 +264,12 @@
         } );
         $(document).ready(function() {
             $('#amis').DataTable();
+        } );
+        $(document).ready(function() {
+            $('#followers').DataTable();
+        } );
+        $(document).ready(function() {
+            $('#voyagesSuivis').DataTable();
         } );
     </script>
 {% endblock %}

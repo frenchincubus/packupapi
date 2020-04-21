@@ -130,14 +130,7 @@ class AdminController extends AbstractController
             $voyages = $em->getRepository(Voyage::class)->findBy(['userId' => $user]);
             $commentaires = $em->getRepository(Commentaires::class)->findBy(['userId' => $user]);
 
-            return $this->render('dashboard/userDetails.html.twig',[
-                'user' => $user,
-                'voyages' => $voyages,
-                'commentaires' => $commentaires,
-                'amis' => $amis,
-                'users' => $users,
-                'voyagesSuivis' => $voyagesSuivis
-                ]);
+            return $this->render('dashboard/userDetails.html.twig',['user' => $user,]);
         } else {
 
             return  $this->redirectToRoute('users');
