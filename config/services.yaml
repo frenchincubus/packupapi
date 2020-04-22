@@ -29,7 +29,3 @@ services:
     App\EventListener\LoginListener:
         tags:
             - { name: 'kernel.event_listener', event: 'security.authentication.success'}
-
-    App\EventListener\DatabaseActivitySubscriber:
-      tags:
-        - { name: 'doctrine.event_subscriber' }

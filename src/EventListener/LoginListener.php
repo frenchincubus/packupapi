@@ -22,7 +22,6 @@ class LoginListener
     public function onSecurityAuthenticationSuccess(AuthenticationEvent $event)
     {
         $user = $event->getAuthenticationToken()->getUser();
-
         if ($user instanceof User) {
             $user->setLastLogin(new DateTime());
             $this->em->persist($user);

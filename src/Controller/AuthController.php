@@ -95,11 +95,6 @@ class AuthController extends AbstractController
 
     public function checkCredentials($credentials,User $user, UserPasswordEncoderInterface $passwordEncoder)
     {
-//        $user->setLastLogin(new \DateTime());
-//        $em = $this->getDoctrine()->getManager();
-//        $em->persist($user);
-//        $em->flush();
-
         return $passwordEncoder->isPasswordValid($user, $credentials->password);
     }
 }

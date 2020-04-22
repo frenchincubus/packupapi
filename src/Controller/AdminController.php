@@ -151,11 +151,6 @@ class AdminController extends AbstractController
             $voyage = $em->getRepository(Voyage::class)->findOneBy(['id' => $id]);
             $etapes = $em->getRepository(Etape::class)->findBy(['voyageId' => $id]);
 
-            /** @var Etape $etape */
-            foreach ($etapes as $etape) {
-                $etapes["activites"] = $em->getRepository(Activite::class)->findBy(['etapeId' => $etape->getId()]);
-            }
-
             return $this->render('dashboard/voyageDetails.html.twig',["voyage" => $voyage, "etapes" => $etapes]);
         } else {
             $error = true;

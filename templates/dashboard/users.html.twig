@@ -27,7 +27,7 @@
                     <td>{{ user.prenom }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.roles|join('|') }}</td>
-                    <td>{{ user.dateCreation | date('d/m/y h:i:s') }}</td>
+                    <td>{{ user.dateCreation is empty ? "-" : user.dateCreation|date('d/m/y h:i:s') }}</td>
                     <td><a href="{{ path('user_details', {id:user.id}) }}"><span class="badge badge-warning">consulter</span></a></td>
                 </tr>
             {% endfor %}

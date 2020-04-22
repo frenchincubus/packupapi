@@ -14,6 +14,8 @@ use ApiPlatform\Core\Annotation\ApiSubresource;
  *      "normalization_context"={"groups"={"voyage"}}
  * })
  * @ORM\Entity(repositoryClass="App\Repository\VoyageRepository")
+ * @ORM\HasLifecycleCallbacks()
+ *
  */
 class Voyage
 {
@@ -68,8 +70,9 @@ class Voyage
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"voyage", "user"})
      */
-    private $dateModification;
+    private $updatedAt;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -217,26 +220,6 @@ class Voyage
 
         return $this;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getDateModification()
-    {
-        return $this->dateModification;
-    }
-
-    /**
-     * @param mixed $dateModification
-     * @return Voyage
-     */
-    public function setDateModification($dateModification)
-    {
-        $this->dateModification = $dateModification;
-        return $this;
-    }
-
-
 
     public function getPriorite(): ?int
     {
@@ -426,4 +409,32 @@ class Voyage
     {
         return $this->getName();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param mixed $updatedAt
+     * @return Voyage
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+
+
+//    /**
+//     * @ORM\PostUpdate()
+//     */
+//    public function updatedDateModification()
+//    {
+//        $this->setDateModification(new \DateTime());
+//    }
 }

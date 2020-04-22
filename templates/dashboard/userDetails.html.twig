@@ -6,7 +6,7 @@
 
 {% block main %}
 
-    <div class="container bootstrap snippet">
+    <div class="bootstrap snippet">
         <div class="row">
             <div class="col-sm-10"><h1>{{ user.email }}</h1></div>
         </div>
@@ -19,9 +19,10 @@
                     <li class="list-group-item list-group-item-secondary"><strong>Profil</strong> </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">Id: <span>{{ user.id }}</span></li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">Nom Prénom:  <span>{{ user.nom }} {{ user.prenom }}</span></li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center">Créé le: <span> {{ user.dateCreation | date('d/m/y à h:i:s') }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Créé le: <span> {{ user.dateCreation is empty ? "-" : user.dateCreation | date('d/m/y à h:i:s') }}</span></li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">Rôles: <span>{{ user.roles|join('|') }}</span></li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">Age: <span>{{ user.age }} ans</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Dernière connexion: <span>{{ user.lastLogin is empty ? "-" : user.lastLogin|date('d/m/y à h:i:s') }}</span></li>
 
                 </ul>
                 <br>
@@ -137,9 +138,9 @@
                                     <tr>
                                         <th scope="row">{{ voyage.id }}</th>
                                         <td>{{ voyage.name }}</td>
-                                        <td>{{ voyage.dateDebut | date('d/m/y h:i:s') }}</td>
-                                        <td>{{ voyage.dateFin | date('d/m/y h:i:s') }}</td>
-                                        <td>{{ voyage.datePublication | date('d/m/y h:i:s') }}</td>
+                                        <td>{{ voyage.dateDebut is empty ? "-" : voyage.dateDebut|date('d/m/y h:i:s') }}</td>
+                                        <td>{{ voyage.dateFin is empty ? "-" :  voyage.dateFin|date('d/m/y h:i:s') }}</td>
+                                        <td>{{ voyage.datePublication is empty ? "-" : voyage.datePublication|date('d/m/y h:i:s') }}</td>
 
                                         {% if voyage.isDeleted %}
                                             <td><span class="badge badge-danger">supprimé</span></td>
