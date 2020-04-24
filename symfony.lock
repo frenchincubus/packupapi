@@ -182,6 +182,18 @@
     "psr/log": {
         "version": "1.1.2"
     },
+    "sensio/framework-extra-bundle": {
+        "version": "5.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.2",
+            "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
+        },
+        "files": [
+            "config/packages/sensio_framework_extra.yaml"
+        ]
+    },
     "symfony/asset": {
         "version": "v5.0.1"
     },
@@ -246,6 +258,9 @@
             "./.env"
         ]
     },
+    "symfony/form": {
+        "version": "v5.0.7"
+    },
     "symfony/framework-bundle": {
         "version": "4.4",
         "recipe": {
@@ -275,6 +290,9 @@
     "symfony/inflector": {
         "version": "v5.0.1"
     },
+    "symfony/intl": {
+        "version": "v5.0.7"
+    },
     "symfony/maker-bundle": {
         "version": "1.0",
         "recipe": {
@@ -286,6 +304,12 @@
     },
     "symfony/mime": {
         "version": "v5.0.1"
+    },
+    "symfony/options-resolver": {
+        "version": "v5.0.7"
+    },
+    "symfony/polyfill-intl-icu": {
+        "version": "v1.15.0"
     },
     "symfony/polyfill-intl-idn": {
         "version": "v1.13.1"

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,6 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      "normalization_context"={"groups"={"user"}}
  * })
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -56,8 +58,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups("user")
      */
-    private $dateModification;
+    private $updatedAt;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -118,7 +121,6 @@ class User implements UserInterface
         $this->voyagesSuivis = new ArrayCollection();
         $this->setLastLogin(new DateTime());
         $this->setDateCreation(new DateTime());
-        $this->setDateModification(new DateTime());
     }
 
     public function getId(): ?int
@@ -199,12 +201,12 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getDateCreation(): ?DateTimeInterface
     {
         return $this->dateCreation;
     }
 
-    public function setDateCreation(\DateTimeInterface $dateCreation): self
+    public function setDateCreation(DateTimeInterface $dateCreation): self
     {
         $this->dateCreation = $dateCreation;
 
@@ -214,18 +216,18 @@ class User implements UserInterface
     /**
      * @return mixed
      */
-    public function getDateModification()
+    public function getUpdatedAt()
     {
-        return $this->dateModification;
+        return $this->updatedAt;
     }
 
     /**
-     * @param mixed $dateModification
+     * @param mixed $updatedAt
      * @return User
      */
-    public function setDateModification($dateModification)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->dateModification = $dateModification;
+        $this->updatedAt = $updatedAt;
         return $this;
     }
 
@@ -462,12 +464,19 @@ class User implements UserInterface
     }
 
 
-
     /**
      * @return string|null
      */
     public function __toString()
     {
         return $this->getEmail();
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function DateUpdate()
+    {
+        $this->setUpdatedAt(new DateTime());
     }
 }

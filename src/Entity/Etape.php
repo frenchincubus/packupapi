@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,6 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\EtapeRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Etape
 {
@@ -91,7 +94,7 @@ class Etape
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateModification;
+    private $updatedAt;
 
 
 
@@ -165,24 +168,24 @@ class Etape
         return $this;
     }
 
-    public function getDateDebut(): ?\DateTimeInterface
+    public function getDateDebut(): ?DateTimeInterface
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(\DateTimeInterface $dateDebut): self
+    public function setDateDebut(DateTimeInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
-    public function getDateFin(): ?\DateTimeInterface
+    public function getDateFin(): ?DateTimeInterface
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(\DateTimeInterface $dateFin): self
+    public function setDateFin(DateTimeInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
 
@@ -228,18 +231,18 @@ class Etape
     /**
      * @return mixed
      */
-    public function getDateModification()
+    public function getUpdatedAt()
     {
-        return $this->dateModification;
+        return $this->updatedAt;
     }
 
     /**
-     * @param mixed $dateModification
+     * @param mixed $updatedAt
      * @return Etape
      */
-    public function setDateModification($dateModification)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->dateModification = $dateModification;
+        $this->updatedAt = $updatedAt;
         return $this;
     }
 
@@ -282,5 +285,13 @@ class Etape
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @ORM\PostUpdate()
+     */
+    public function DateUpdate()
+    {
+        $this->setUpdatedAt(new DateTime());
     }
 }

@@ -9,6 +9,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\ActiviteRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Activite
 {
@@ -71,7 +72,7 @@ class Activite
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateModification;
+    private $updatedAt;
 
 
 
@@ -185,22 +186,20 @@ class Activite
     /**
      * @return mixed
      */
-    public function getDateModification()
+    public function getUpdatedAt()
     {
-        return $this->dateModification;
+        return $this->updatedAt;
     }
 
     /**
-     * @param mixed $dateModification
+     * @param mixed $updatedAt
      * @return Activite
      */
-    public function setDateModification($dateModification)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->dateModification = $dateModification;
+        $this->updatedAt = $updatedAt;
         return $this;
     }
-
-
 
     /**
      * @return string|null
@@ -208,6 +207,14 @@ class Activite
     public function __toString()
     {
         return $this->getNom();
+    }
+
+    /**
+     * @ORM\PostUpdate()
+     */
+    public function DateUpdate()
+    {
+        $this->setUpdatedAt(new DateTime());
     }
 
 }

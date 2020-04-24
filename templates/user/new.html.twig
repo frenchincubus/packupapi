@@ -1,0 +1,9 @@
+{% extends 'dashboard/index.html.twig' %}
+
+
+{% block main %}
+
+    {{ include('user/_form.html.twig') }}
+
+    <a class="btn btn-primary" href="{{ path('users') }}">Retour à liste des utilisateurs</a>
+{% endblock %}

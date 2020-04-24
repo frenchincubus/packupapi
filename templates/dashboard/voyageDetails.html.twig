@@ -152,7 +152,7 @@
                                                 <img src="{{ photo }}" alt="{{ photo }}" class="img-thumbnail ml-2" style="width: 50px;">
                                             {% endfor %}
                                             <p class="card-text"><small class="text-muted">
-                                                    {{ activite.dateModification is empty ? "" : "Dernière modification le" ~ activite.dateModification| date('d/m/y h:i:s') }}</small></p>
+                                                    {{ activite.updatedAt is empty ? "" : "Dernière modification le" ~ activite.updatedAt| date('d/m/y h:i:s') }}</small></p>
 {#                                            <a href="#" class="btn btn-primary">Go somewhere</a>#}
                                         </div>
                                     </div>

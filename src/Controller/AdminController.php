@@ -32,22 +32,6 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/users", name="users")
-     */
-    public function usersAction()
-    {
-        if (!$this->isGranted('ROLE_ADMIN')) {
-            return $this->redirectToRoute('app_login');
-        }
-
-        $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository(User::class)->findAll();
-
-        return $this->render('dashboard/users.html.twig',['users' => $users]);
-    }
-
-
-    /**
      * @Route("/admin/voyages", name="voyages")
      */
     public function voyagesAction()
@@ -113,31 +97,6 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/user/{id}", name="user_details", requirements={"id"="\d+"})
-     * @param Request $request
-     * @param $id
-     * @return RedirectResponse|Response
-     */
-    public function showUserAction(Request $request,$id)
-    {
-        if ($id) {
-            $em = $this->getDoctrine()->getManager();
-            /** @var User $user */
-            $user = $em->getRepository(User::class)->findOneBy(['id' => $id]);
-            $amis = $user->getAmis();
-            $users = $user->getUsers();
-            $voyagesSuivis = $user->getVoyagesSuivis();
-            $voyages = $em->getRepository(Voyage::class)->findBy(['userId' => $user]);
-            $commentaires = $em->getRepository(Commentaires::class)->findBy(['userId' => $user]);
-
-            return $this->render('dashboard/userDetails.html.twig',['user' => $user,]);
-        } else {
-
-            return  $this->redirectToRoute('users');
-        }
-    }
-
-    /**
      * @Route("/admin/voyage/{id}", name="voyage_details", requirements={"id"="\d+"})
      * @param Request $request
      * @param $id
@@ -158,5 +117,7 @@ class AdminController extends AbstractController
         }
 
     }
+
+
 
 }
