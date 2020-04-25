@@ -47,7 +47,7 @@
     {# ----- PRESENTATION VOYAGE ----- #}
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
-            <h1 class="display-4">{{ voyage.name }}<span><img src="{{ voyage.photo }}" alt="..." class="img-thumbnail float-right" style="width: 150px;"></span></h1>
+            <h1 class="display-4">{{ voyage.name }}<span><img src="{{ voyage.photo }}" class="img-thumbnail float-right" style="width: 150px;"></span></h1>
 
             <p class="lead">{{ voyage.description is empty ? "": voyage.description }}</p>
             <p class="lead"><strong>Utilisateur: </strong> {{ voyage.userId.nom }} {{ voyage.userId.prenom }}</p>

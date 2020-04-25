@@ -3,8 +3,11 @@
 
 {% block main %}
 
-    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }} {{ include('user/_delete_form.html.twig') }}
 
+    {{ include('user/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <br>
+    {{ include('user/_delete_form.html.twig') }}
+    <br>
     <a class="btn btn-primary" href="{{ path('users') }}">Retourner à la liste des utilisateurs</a>
 
 {% endblock %}

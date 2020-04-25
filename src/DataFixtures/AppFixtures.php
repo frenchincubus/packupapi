@@ -113,6 +113,14 @@ class AppFixtures extends Fixture
                     $activite->setEtapeId($etape);
                     $activite->setCoordinates([$faker->latitude, $faker->longitude]);
                     $activite->setTypeTransport('voiture');
+
+                    $photos = [
+                        $faker->imageUrl(),
+                        $faker->imageUrl(),
+                        $faker->imageUrl(),
+                    ];
+                    $activite->setPhoto($photos);
+
                     $manager->persist($activite);
                 }
 

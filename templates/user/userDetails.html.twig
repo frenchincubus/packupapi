@@ -8,11 +8,14 @@
 
     <div class="bootstrap snippet">
         <div class="row">
-            <div class="col-sm-10"><h1>{{ user.email }}</h1></div>
+            <div class="col-sm-10">
+                <h1>{{ user.email }}</h1>
+            </div>
         </div>
         <br>
         <div class="row">
             <div class="col-sm-3"><!--left col-->
+                <span><img src="{{ user.photo }}" alt="..." class="img-thumbnail mx-auto" style="width: 150px;"></span>
 
                 {# ----- PROFIL ----- #}
                 <ul class="list-group">

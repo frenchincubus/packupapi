@@ -28,13 +28,14 @@ class UserType extends AbstractType
             ->add('password', PasswordType::class)
             ->add('nom', TextType::class)
             ->add('prenom', TextType::class)
-            ->add('age', IntegerType::class);
-//            ->add('roles', ChoiceType::class, [
-//                'choices' => [
-//                    'Administrateur' => "ROLE_ADMIN",
-//                    'Utilisateur' => "ROLE_USER"
-//                ]
-//            ]);
+            ->add('age', IntegerType::class)
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'Administrateur' => 'ROLE_ADMIN',
+                    'Utilisateur' => 'ROLE_USER'
+                ],
+                'multiple' => true
+            ]);
     }
 
     /**
