@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -12,6 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      "normalization_context"={"groups"={"commentaire"}}
  * })
  * @ORM\Entity(repositoryClass="App\Repository\CommentairesRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Commentaires
 {
@@ -46,6 +48,12 @@ class Commentaires
      * @ORM\JoinColumn(nullable=false)
      */
     private $voyageId;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"user","commentaire", "voyage"})
+     */
+    private $updatedAt;
 
     public function getId(): ?int
     {
@@ -98,5 +106,31 @@ class Commentaires
         $this->voyageId = $voyageId;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param mixed $updatedAt
+     * @return Commentaires
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function DateUpdate()
+    {
+        $this->setUpdatedAt(new DateTime());
     }
 }

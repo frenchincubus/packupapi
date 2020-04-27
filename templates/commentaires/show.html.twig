@@ -30,6 +30,10 @@
                     <a href="{{ path('user_details',{id:commentaire.userId.Id}) }}"><span class="badge badge-warning">consulter</span></a>
                 </td>
             </tr>
+            <tr>
+                <th>Date de modification</th>
+                <td>{{ commentaire.updatedAt ? commentaire.datePublication|date('Y-m-d H:i:s') : ' - ' }}</td>
+            </tr>
         </tbody>
     </table>
 
