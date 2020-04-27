@@ -116,6 +116,9 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "jms/metadata": {
+        "version": "2.1.0"
+    },
     "lcobucci/jwt": {
         "version": "3.3.1"
     },
@@ -156,7 +159,7 @@
         "version": "2.2.3"
     },
     "php": {
-        "version": "7.4"
+        "version": "7.3"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.0.0"
@@ -246,6 +249,9 @@
             "./.env"
         ]
     },
+    "symfony/form": {
+        "version": "v5.0.7"
+    },
     "symfony/framework-bundle": {
         "version": "4.4",
         "recipe": {
@@ -275,6 +281,9 @@
     "symfony/inflector": {
         "version": "v5.0.1"
     },
+    "symfony/intl": {
+        "version": "v5.0.7"
+    },
     "symfony/maker-bundle": {
         "version": "1.0",
         "recipe": {
@@ -287,8 +296,20 @@
     "symfony/mime": {
         "version": "v5.0.1"
     },
+    "symfony/options-resolver": {
+        "version": "v5.0.7"
+    },
+    "symfony/polyfill-intl-grapheme": {
+        "version": "v1.15.0"
+    },
+    "symfony/polyfill-intl-icu": {
+        "version": "v1.15.0"
+    },
     "symfony/polyfill-intl-idn": {
         "version": "v1.13.1"
+    },
+    "symfony/polyfill-intl-normalizer": {
+        "version": "v1.15.0"
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.13.1"
@@ -349,6 +370,9 @@
     "symfony/stopwatch": {
         "version": "v5.0.1"
     },
+    "symfony/string": {
+        "version": "v5.0.7"
+    },
     "symfony/translation-contracts": {
         "version": "v2.0.1"
     },
@@ -396,6 +420,18 @@
     },
     "twig/twig": {
         "version": "v3.0.0"
+    },
+    "vich/uploader-bundle": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.5",
+            "ref": "c4f5755b37fb65b9c6a3cbdae91205c15a137ed4"
+        },
+        "files": [
+            "config/packages/vich_uploader.yaml"
+        ]
     },
     "webmozart/assert": {
         "version": "1.6.0"
