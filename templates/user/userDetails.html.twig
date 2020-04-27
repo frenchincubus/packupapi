@@ -108,7 +108,9 @@
                                         <th scope="row">{{ follower.id }}</th>
                                         <td>{{ follower.prenom}} {{ follower.nom }}</td>
                                         <td>{{ follower.email }}</td>
-                                        <td><a href="{{ path('user_details',{id:follower.id}) }}"><span class="badge badge-warning">consulter</span></a></td>
+                                        <td>
+                                            <a href="{{ path('user_details',{id:follower.id}) }}"><span class="badge badge-warning">consulter</span></a>
+                                        </td>
                                     </tr>
                                 {% endfor %}
 
@@ -156,7 +158,10 @@
                                         {% else %}
                                             <td><span class="badge badge-warning">no public</span></td>
                                         {% endif %}
-                                        <td><a href="{{ path('voyage_details',{id:voyage.id}) }}"><span class="badge badge-warning">consulter</span></a></td>
+                                        <td>
+                                            <a href="{{ path('voyage_details',{id:voyage.id}) }}"><span class="badge badge-warning">consulter</span></a>
+                                            <a href="{{ path('voyage_edit', {'id': voyage.id}) }}"><span class="badge badge-success">Editer</span></a>
+                                        </td>
                                     </tr>
                                 {% endfor %}
 

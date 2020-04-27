@@ -17,6 +17,7 @@
                 <th scope="col">Utilisateur</th>
                 <th scope="col">début</th>
                 <th scope="col">fin</th>
+                <th scope="col">actions</th>
             </tr>
             </thead>
             <tbody>
@@ -29,12 +30,21 @@
                     <td>{{ activite.etapeId.voyageId.userId.username }}</td>
                     <td>{{ activite.dateDebut | date('d/m/y h:i:s') }}</td>
                     <td>{{ activite.dateFin | date('d/m/y h:i:s') }}</td>
+                    <td>
+                        <a href="{{ path('activite_show', {'id': activite.Id}) }}"><span class="badge badge-warning">Consulter</span></a>
+                        <a href="{{ path('activite_edit', {'id': activite.Id}) }}"><span class="badge badge-success">Editer</span></a>
+                    </td>
                 </tr>
             {% endfor %}
 
             </tbody>
         </table>
     </div>
+
+    <div>
+        <a class="btn btn-primary" href="{{ path('activite_new') }}">Ajouter une activité</a>
+    </div>
+    <br>
 
 {% endblock %}
 

@@ -51,7 +51,10 @@
 
             <p class="lead">{{ voyage.description is empty ? "": voyage.description }}</p>
             <p class="lead"><strong>Utilisateur: </strong> {{ voyage.userId.nom }} {{ voyage.userId.prenom }}</p>
+
+            <a class="btn btn-primary" href="{{ path('voyage_edit', {'id': voyage.id}) }}">Editer le voyage</a>
         </div>
+
     </div>
     {# ----- FIN PRESENTATION VOYAGE ----- #}
 
@@ -92,6 +95,7 @@
                             <th class="text-center" scope="col">nom prenom</th>
                             <th class="text-center" scope="col">email</th>
                             <th class="text-center" scope="col">derniere connexion</th>
+                            <th class="text-center" scope="col">actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -101,6 +105,7 @@
                             <td class="text-center">{{ follower.nom }} {{ follower.prenom }}</td>
                             <td class="text-center">{{ follower.email }}</td>
                             <td class="text-center">{{ follower.lastLogin is empty ? "-" : follower.lastLogin|date('d/m/yy h:i:s') }}</td>
+                            <td class="text-center"><a href="{{ path('user_details', {id:follower.id}) }}"><span class="badge badge-warning">consulter</span></a></td>
                         </tr>
                         {% endfor %}
                         </tbody>
@@ -112,12 +117,13 @@
                 {% for key,etape in etapes %}
                     <div class="tab-pane fade" id="list-{{ key ~ etape.id}}" role="tabpanel" aria-labelledby="list-{{ key ~ etape.id}}-list">
                         <div class="alert alert-secondary" role="alert">
-                            <h3>
-                                {{ etape.name }} ({{ etape.pays ~ " - " ~ etape.ville }}) {{ etape.budget ~ "€" }}
+                            <h5>
+                                {{ etape.name }} ({{ etape.pays ~ " - " ~ etape.ville }}) {{ " - " ~ etape.budget ~ "€" }}
+                                <a href="{{ path('etape_edit',{id:etape.id}) }}"><span class="badge badge-warning">Editer</span></a>
                                 <span class="float-right">
                                     <img src="{{ etape.photo }}" alt="{{ etape.photo }}" class="img-thumbnail" style="width: 50px;">
                                 </span>
-                            </h3>
+                            </h5>
                         </div>
                         <div class="mt-3">
                             <p>
@@ -139,7 +145,8 @@
                                 <div class="col-sm-6">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ "Activité " ~ counter2 ~" - "~ activite.nom }}</h5>
+                                            <h5 class="card-title">{{ "Activité " ~ counter2 ~" - "~ activite.nom }}<a href="{{ path('activite_edit', {'id': activite.Id}) }}"><span class="badge badge-warning float-right">Editer</span></a></h5>
+
                                             <p>
                                                 <small>
                                                     {{ "Départ " ~ activite.dateDebut|date('d/m/y h:i:s') }}

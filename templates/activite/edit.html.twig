@@ -1,0 +1,12 @@
+{% extends 'dashboard/index.html.twig' %}
+
+{% block main %}
+
+    {{ include('activite/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <br>
+    {{ include('activite/_delete_form.html.twig') }}
+    <br>
+    <a class="btn btn-primary" href="{{ path('activites') }}">Retourner à la liste des activités</a>
+    <br>
+    <br>
+{% endblock %}

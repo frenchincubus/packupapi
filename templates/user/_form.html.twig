@@ -41,7 +41,7 @@
 
         {% if user.photo %}
             <label>Photo</label><br>
-            <span class=""><img src="{{ user.photo }}" alt="..." class="img-thumbnail" style="width: 150px;"></span>
+            <span class=""><img src="{{ user.photo }}" alt="photo {{ user.nom ~ " " ~ user.prenom }}" class="img-thumbnail" style="width: 150px;"></span>
         {% endif %}
     </div>
 </div>

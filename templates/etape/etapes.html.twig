@@ -18,6 +18,7 @@
                 <th scope="col">fin</th>
                 <th scope="col">pays</th>
                 <th scope="col">ville</th>
+                <th scope="col">actions</th>
             </tr>
             </thead>
             <tbody>
@@ -31,6 +32,10 @@
                     <td>{{ etape.dateFin | date('d/m/y h:i:s') }}</td>
                     <td>{{ etape.pays }}</td>
                     <td>{{ etape.ville }}</td>
+                    <td>
+                        <a href="{{ path('etape_show',{id:etape.id}) }}"><span class="badge badge-warning">consulter</span></a>
+                        <a href="{{ path('etape_edit', {'id': etape.id}) }}"><span class="badge badge-success">Editer</span></a>
+                    </td>
                 </tr>
             {% endfor %}
 
@@ -38,6 +43,10 @@
         </table>
     </div>
 
+    <div>
+        <a class="btn btn-primary" href="{{ path('etape_new') }}">Ajouter une étape</a>
+    </div>
+    <br>
 
 {% endblock %}
 

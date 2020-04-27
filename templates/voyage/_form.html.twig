@@ -1,0 +1,70 @@
+{{ form_start(form) }}
+
+<div class="form-group">
+    {{ form_label(form.name,'Titre') }}
+    {{ form_widget(form.name, {'attr':{'class':'form-control'}}) }}
+    {{ form_errors(form.name,{'attr':{'class':'alert-danger'}}) }}
+</div>
+<div class="form-group">
+    {{ form_label(form.description,'Description') }}
+    {{ form_widget(form.description, {'attr':{'class':'form-control'}}) }}
+    {{ form_errors(form.description,{'attr':{'class':'alert-danger'}}) }}
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+        {{ form_label(form.dateDebut,'Départ') }}
+        {{ form_widget(form.dateDebut) }}
+        {{ form_errors(form.dateDebut,{'attr':{'class':'alert-danger'}}) }}
+    </div>
+    <div class="form-group col-md-6">
+        {{ form_label(form.dateFin,'Fin') }}
+        {{ form_widget(form.dateFin) }}
+        {{ form_errors(form.dateFin,{'attr':{'class':'alert-danger'}}) }}
+    </div>
+</div>
+
+<div class="form-row">
+    <div class="form-group col-md-3">
+        {{ form_label(form.nbPersonnes,'Personnes') }}
+        {{ form_widget(form.nbPersonnes,{'attr':{'class':'form-control'}}) }}
+        {{ form_errors(form.nbPersonnes,{'attr':{'class':'alert-danger'}}) }}
+    </div>
+
+    <div class="form-group col-md-3">
+        {{ form_label(form.budget,'Budget(€)') }}
+        {{ form_widget(form.budget,{'attr':{'class':'form-control'}}) }}
+        {{ form_errors(form.budget,{'attr':{'class':'alert-danger'}}) }}
+    </div>
+
+    <div class="form-group col-md-6">
+        {{ form_label(form.userId,'Utilisateur') }}
+        {{ form_widget(form.userId,{'attr':{'class':'form-control'}}) }}
+        {{ form_errors(form.userId,{'attr':{'class':'alert-danger'}}) }}
+    </div>
+</div>
+
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+        {{ form_label(form.isPublic,'Public') }}
+        {{ form_widget(form.isPublic) }}
+        {{ form_errors(form.isPublic,{'attr':{'class':'alert-danger'}}) }}
+    </div>
+</div>
+
+
+
+<div class="form-group col-md-6">
+
+    {% if voyage.photo %}
+        <label>Photo</label><br>
+        <span class=""><img src="{{ voyage.photo }}" alt="photo {{ voyage.name }}"
+                            class="img-thumbnail" style="width: 150px;"></span>
+    {% endif %}
+</div>
+
+<button class="btn btn-success">{{ button_label|default('Valider',{'attr':{'class':'btn btn-success'}}) }}</button>
+
+
+{{ form_end(form) }}

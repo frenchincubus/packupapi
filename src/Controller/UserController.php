@@ -31,7 +31,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/admin/user/{id}", name="user_details", requirements={"id"="\d+"})
+     * @Route("/admin/user/{id}/details", name="user_details", requirements={"id"="\d+"})
      * @param Request $request
      * @param $id
      * @return RedirectResponse|Response
@@ -116,7 +116,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("admin/user/{id}", name="user_delete", methods={"DELETE"})
+     * @Route("admin/user/{id}/delete", name="user_delete", methods={"DELETE"})
      * @param Request $request
      * @param User $user
      * @return Response

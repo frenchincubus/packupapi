@@ -1,0 +1,9 @@
+{% extends 'dashboard/index.html.twig' %}
+
+{% block main %}
+
+    {{ include('commentaires/_form.html.twig') }}
+    <br>
+
+    <a class="btn btn-primary" href="{{ path('commentaires') }}">Retourner à la liste des commentaires</a>
+{% endblock %}

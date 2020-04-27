@@ -5,10 +5,11 @@ namespace App\Form;
 
 
 use App\Entity\Etape;
+use App\Entity\Voyage;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -20,18 +21,41 @@ class EtapeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('description', TextareaType::class)
-            ->add('pays', TextType::class)
-            ->add('ville', TextType::class)
-            ->add('coordinates', CollectionType::class, [
-                'entry_type' => TextType::class
+            ->add('name', TextType::class, [
+                'label' => 'Titre'
             ])
-            ->add('dateDebut', DateTimeType::class)
-            ->add('dateFin', DateTimeType::class)
-            ->add('photo', FileType::class)
-            ->add('budget', IntegerType::class)
-            ;
+            ->add('description', TextareaType::class, [
+                'label' => 'Description'
+            ])
+            ->add('pays', TextType::class, [
+                'label' => 'Pays'
+            ])
+            ->add('ville', TextType::class, [
+                'label' => 'Ville'
+            ])
+            ->add('coordinates', CollectionType::class, [
+                'entry_type' => TextType::class,
+                'label' => false,
+                'allow_add' => true,
+                'prototype' => true,
+            ])
+            ->add('dateDebut', DateTimeType::class, [
+                'label' => 'Départ'
+            ])
+            ->add('dateFin', DateTimeType::class, [
+                'label' => 'Fin'
+            ])
+            ->add('budget', IntegerType::class, [
+                'label' => 'Budget(€)'
+            ])
+            ->add('voyageId',EntityType::class, [
+                'label' => 'Voyage',
+                'class' => 'App\Entity\Voyage',
+                'choice_value' => function(Voyage $voyage = null) {
+                    return $voyage ? $voyage->getName(): '';
+                }
+
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

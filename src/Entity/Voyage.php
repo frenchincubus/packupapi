@@ -431,7 +431,7 @@ class Voyage
     }
 
     /**
-     * @ORM\PostUpdate()
+     * @ORM\PreUpdate()
      */
     public function DateUpdate()
     {

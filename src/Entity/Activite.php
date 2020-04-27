@@ -210,7 +210,7 @@ class Activite
     }
 
     /**
-     * @ORM\PostUpdate()
+     * @ORM\PreUpdate()
      */
     public function DateUpdate()
     {

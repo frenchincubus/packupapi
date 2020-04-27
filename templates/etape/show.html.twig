@@ -1,0 +1,82 @@
+{% extends 'dashboard/index.html.twig' %}
+
+{% block main %}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ etape.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ etape.name }}</td>
+            </tr>
+            <tr>
+                <th>Voyage</th>
+                <td>
+                    {{ etape.voyageId.name }}
+                    <a href="{{ path('voyage_details',{id:etape.voyageId.Id}) }}"><span class="badge badge-warning">consulter</span></a>
+                </td>
+            </tr>
+            <tr>
+                <th>Utilisateur</th>
+                <td>
+                    {{ etape.voyageId.userId.email }}
+                    <a href="{{ path('user_details',{id:etape.voyageId.userId.Id}) }}"><span class="badge badge-warning">consulter</span></a>
+                </td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ etape.description }}</td>
+            </tr>
+            <tr>
+                <th>Pays</th>
+                <td>{{ etape.pays }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ etape.ville }}</td>
+            </tr>
+            <tr>
+                <th>Coordonnées</th>
+                <td>{{ etape.coordinates ? etape.coordinates|join(', ') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Départ</th>
+                <td>{{ etape.dateDebut ? etape.dateDebut|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fin</th>
+                <td>{{ etape.dateFin ? etape.dateFin|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                <td><img src="{{ etape.photo }}" alt="{{ etape.photo }}" class="img-thumbnail" style="width: 50px;"></td>
+            </tr>
+            <tr>
+                <th>Budget(€)</th>
+                <td>{{ etape.budget }}</td>
+            </tr>
+            <tr>
+                <th>Activités</th>
+                <td>{{ etape.activites|length }}</td>
+            </tr>
+            <tr>
+                <th>Date de modification</th>
+                <td>{{ etape.updatedAt ? etape.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="{{ path('etapes') }}">Retourner à la liste des étapes</a>
+    <br>
+    <br>
+
+    <a class="btn btn-success" href="{{ path('etape_edit', {'id': etape.id}) }}">Editer</a>
+    <br>
+    <br>
+
+    {{ include('etape/_delete_form.html.twig') }}
+    <br>
+{% endblock %}

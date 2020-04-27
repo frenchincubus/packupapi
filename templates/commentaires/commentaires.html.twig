@@ -14,6 +14,7 @@
                 <th scope="col">utilisateur</th>
                 <th scope="col">Voyage</th>
                 <th scope="col">publication</th>
+                <th scope="col">actions</th>
             </tr>
             </thead>
             <tbody>
@@ -23,12 +24,21 @@
                     <td>{{ commentaire.userId.username }}</td>
                     <td>{{ commentaire.voyageId.name }}</td>
                     <td>{{ commentaire.datePublication | date('d/m/y h:i:s') }}</td>
+                    <td>
+                        <a href="{{ path('commentaires_show', {'id': commentaire.Id}) }}"><span class="badge badge-warning">Consulter</span></a>
+                        <a href="{{ path('commentaires_edit', {'id': commentaire.Id}) }}"><span class="badge badge-success">Editer</span></a>
+                    </td>
                 </tr>
             {% endfor %}
 
             </tbody>
         </table>
     </div>
+
+    <div>
+        <a class="btn btn-primary" href="{{ path('commentaires_new') }}">Ajouter un commentaire</a>
+    </div>
+    <br>
 
 {% endblock %}
 
