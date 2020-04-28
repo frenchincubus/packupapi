@@ -14,7 +14,18 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  * @ApiResource(attributes={
  *      "normalization_context"={"groups"={"voyage:read"}, "enable_max_depth"=true},
  *      "denormalization_context"={"groups"={"voyage:write"}}
- * })
+ *      },
+ *      collectionOperations={
+ *          "post"={
+ *              "method"="POST",
+ *              "path"="/post_voyage"
+ *          },
+ *          "get"={
+ *              "method"="GET",
+ *              "path"="/voyages"
+ *          }
+ *      }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\VoyageRepository")
  */
 class Voyage
