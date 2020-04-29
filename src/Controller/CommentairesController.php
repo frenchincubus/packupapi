@@ -35,6 +35,10 @@ class CommentairesController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $commentaire = new Commentaires();
         $form = $this->createForm(CommentairesType::class, $commentaire);
         $form->handleRequest($request);
@@ -54,25 +58,33 @@ class CommentairesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="commentaires_show", methods={"GET"})
+     * @Route("admin/commentaire/{id}/details", name="commentaires_show", methods={"GET"})
      * @param Commentaires $commentaire
      * @return Response
      */
     public function show(Commentaires $commentaire): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         return $this->render('commentaires/show.html.twig', [
             'commentaire' => $commentaire,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="commentaires_edit", methods={"GET","POST"})
+     * @Route("admin/commentaire/{id}/edit", name="commentaires_edit", methods={"GET","POST"})
      * @param Request $request
      * @param Commentaires $commentaire
      * @return Response
      */
     public function edit(Request $request, Commentaires $commentaire): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $form = $this->createForm(CommentairesType::class, $commentaire);
         $form->handleRequest($request);
 
@@ -89,13 +101,17 @@ class CommentairesController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="commentaires_delete", methods={"DELETE"})
+     * @Route("admin/commentaire/{id}/delete", name="commentaires_delete", methods={"DELETE"})
      * @param Request $request
      * @param Commentaires $commentaire
      * @return Response
      */
     public function delete(Request $request, Commentaires $commentaire): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$commentaire->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($commentaire);

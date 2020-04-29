@@ -37,6 +37,10 @@ class VoyageController extends AbstractController
      */
     public function showVoyageAction(Request $request, $id)
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         if ($id) {
             $em = $this->getDoctrine()->getManager();
             $voyage = $em->getRepository(Voyage::class)->findOneBy(['id' => $id]);
@@ -55,6 +59,10 @@ class VoyageController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $voyage = new Voyage();
         $form = $this->createForm(VoyageType::class, $voyage);
         $form->handleRequest($request);
@@ -82,6 +90,11 @@ class VoyageController extends AbstractController
      */
     public function edit(Request $request, Voyage $voyage): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+
+
         $form = $this->createForm(VoyageType::class, $voyage);
         $form->handleRequest($request);
 
@@ -105,6 +118,10 @@ class VoyageController extends AbstractController
      */
     public function delete(Request $request, Voyage $voyage): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$voyage->getId(), $request->request->get('_token'))) {
 
             $voyage->setIsDeleted(true);

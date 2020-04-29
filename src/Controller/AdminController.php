@@ -3,16 +3,11 @@
 
 namespace App\Controller;
 
-
-use App\Entity\Activite;
 use App\Entity\Commentaires;
-use App\Entity\Etape;
 use App\Entity\User;
 use App\Entity\Voyage;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
@@ -27,6 +22,46 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('dashboard/index.html.twig');
+        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        $voyages = $this->getDoctrine()->getRepository(Voyage::class)->findAll();
+        $commentaires = $this->getDoctrine()->getRepository(Commentaires::class)->findAll();
+
+        $usersConnectes = [];
+        $usersMonth = [];
+        $voyagesMonth = [];
+        $commentairesMonth = [];
+
+        $delay = new DateTime('30 days ago');
+
+        /** @var User $user */
+        foreach ($users as $user) {
+            if ($user->isActiveNow()) {
+                $usersConnectes[] = $user;
+            }
+            if ($user->getDateCreation() > $delay) {
+                $usersMonth[] = $user;
+            }
+        }
+
+        /** @var Voyage $voyage */
+        foreach ($voyages as $voyage) {
+            if ($voyage->getCreatedAt() > $delay) {
+                $voyagesMonth[] = $voyage;
+            }
+        }
+
+        /** @var Commentaires $commentaire */
+        foreach ($commentaires as $commentaire) {
+            if ($commentaire->getDatePublication() > $delay) {
+                $commentairesMonth[] = $commentaire;
+            }
+        }
+
+        return $this->render('dashboard/index.html.twig',[
+            'usersConnectes' => $usersConnectes,
+            'usersMonth' => $usersMonth,
+            'voyagesMonth' => $voyagesMonth,
+            'commentairesMonth' => $commentairesMonth,
+        ]);
     }
 }

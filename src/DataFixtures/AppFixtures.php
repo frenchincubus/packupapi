@@ -7,6 +7,7 @@ use App\Entity\Commentaires;
 use App\Entity\Etape;
 use App\Entity\User;
 use App\Entity\Voyage;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -129,7 +130,7 @@ class AppFixtures extends Fixture
                     $commentaire = new Commentaires();
                     $commentaire->setVoyageId($voyage);
                     $commentaire->setUserId($user);
-                    $commentaire->setDatePublication(new \DateTime('now'));
+                    $commentaire->setDatePublication(new DateTime('now'));
                     $commentaire->setMessage($faker->text);
                     $manager->persist($commentaire);
                 }
@@ -144,7 +145,7 @@ class AppFixtures extends Fixture
 
     public function dateModify($date, $increment)
     {
-        $newDate = new \DateTime();
+        $newDate = new DateTime();
         $newDate->setTimestamp($date->getTimestamp());
         $modify = "+" . $increment . " days";
         return $newDate->modify($modify);

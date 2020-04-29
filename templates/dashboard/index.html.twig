@@ -113,10 +113,10 @@
 {% block body %}
 
     <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{path('admin')}}">PackUp Administration</a>
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="{{ path('admin') }}">PackUp Administration</a>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
-                <a class="nav-link" href="{{ path('app_logout') }}">{{ app.user.username }} se déconnecter</a>
+                <a class="nav-link" href="{{ path('app_logout') }}">{{ app.user.prenom }} se déconnecter</a>
             </li>
         </ul>
     </nav>
@@ -128,16 +128,17 @@
 
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('admin')}}"><span data-feather="home"></span>Home <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="{{ path('admin') }}"><span data-feather="home"></span>Home <span
+                                        class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('users') }}"><span data-feather="users"></span>Users</a>
+                            <a class="nav-link" href="{{ path('users') }}"><span data-feather="users"></span>Utilisateurs</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('voyages') }}"><span data-feather="shopping-cart"></span>Voyages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ path('etapes')}}"><span data-feather="bar-chart-2"></span>Etapes</a>
+                            <a class="nav-link" href="{{ path('etapes') }}"><span data-feather="bar-chart-2"></span>Etapes</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('activites') }}"><span data-feather="users"></span>Activités</a>
@@ -146,44 +147,176 @@
                             <a class="nav-link" href="{{ path('commentaires') }}"><span data-feather="layers"></span>Commentaires</a>
                         </li>
                     </ul>
-
-{#                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">#}
-{#                        <span>Saved reports</span>#}
-{#                        <a class="d-flex align-items-center text-muted" href="#">#}
-{#                            <span data-feather="plus-circle"></span>#}
-{#                        </a>#}
-{#                    </h6>#}
-
-{#                    <ul class="nav flex-column mb-2">#}
-{#                        <li class="nav-item">#}
-{#                            <a class="nav-link" href="#"><span data-feather="file-text"></span>Current month</a>#}
-{#                        </li>#}
-{#                        <li class="nav-item">#}
-{#                            <a class="nav-link" href="#"><span data-feather="file-text"></span>Last quarter</a>#}
-{#                        </li>#}
-{#                        <li class="nav-item">#}
-{#                            <a class="nav-link" href="#"><span data-feather="file-text"></span>Social engagement</a>#}
-{#                        </li>#}
-{#                        <li class="nav-item">#}
-{#                            <a class="nav-link" href="#"><span data-feather="file-text"></span>Year-end sale</a>#}
-{#                        </li>#}
-{#                    </ul>#}
                 </div>
             </nav>
 
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
 
-                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                        <h1 class="h2">{% set current_path = app.request.get('_route') %}{{ current_path|upper }}</h1>
-                    </div>
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+
+                    {% set current_path = app.request.get('_route') %}
+
+                    {# ADMIN #}
+                    {% if current_path == 'admin' %}
+                        <h1 class="h2">Dashboard Home</h1>
+                    {% endif %}
+
+                    {# USERS #}
+                    {% if current_path == 'users' %}
+                        <h1 class="h2">Liste des Utilisateurs</h1>
+                    {% endif %}
+
+                    {% if current_path == 'user_edit' %}
+                        <h1 class="h2">Edition de l'utilisateur</h1>
+                    {% endif %}
+
+                    {% if current_path == 'user_new' %}
+                        <h1 class="h2">Ajout d'un nouvel utilisateur</h1>
+                    {% endif %}
+
+                    {% if current_path == 'user_details' %}
+                        <h1 class="h2">Profil de l'utilisateur</h1>
+                    {% endif %}
+
+                    {% if current_path == 'user_delete' %}
+                        <h1 class="h2">Suppression de l'utilisateur</h1>
+                    {% endif %}
+
+                    {# VOYAGES #}
+                    {% if current_path == 'voyages' %}
+                        <h1 class="h2">Liste des voyages</h1>
+                    {% endif %}
+
+                    {% if current_path == 'voyage_edit' %}
+                        <h1 class="h2">Edition du voyage</h1>
+                    {% endif %}
+
+                    {% if current_path == 'voyage_new' %}
+                        <h1 class="h2">Ajout d'un nouveau voyage</h1>
+                    {% endif %}
+
+                    {% if current_path == 'voyage_details' %}
+                        <h1 class="h2">Détails du voyage</h1>
+                    {% endif %}
+
+                    {% if current_path == 'voyage_delete' %}
+                        <h1 class="h2">Suppression du voyage</h1>
+                    {% endif %}
+
+
+                    {# ETAPES #}
+                    {% if current_path == 'etapes' %}
+                        <h1 class="h2">Liste des étapes</h1>
+                    {% endif %}
+
+                    {% if current_path == 'etape_edit' %}
+                        <h1 class="h2">Edition de l'étape</h1>
+                    {% endif %}
+
+                    {% if current_path == 'etape_new' %}
+                        <h1 class="h2">Ajout d'une nouvelle étape</h1>
+                    {% endif %}
+
+                    {% if current_path == 'etape_show' %}
+                        <h1 class="h2">Détails d'une étape</h1>
+                    {% endif %}
+
+                    {% if current_path == 'etape_delete' %}
+                        <h1 class="h2">Suppression d'une étape</h1>
+                    {% endif %}
+
+
+                    {# ACTIVITES #}
+                    {% if current_path == 'activites' %}
+                        <h1 class="h2">Liste des activités</h1>
+                    {% endif %}
+
+                    {% if current_path == 'activite_edit' %}
+                        <h1 class="h2">Edition de l'activité</h1>
+                    {% endif %}
+
+                    {% if current_path == 'activite_new' %}
+                        <h1 class="h2">Ajout d'une nouvelle activité</h1>
+                    {% endif %}
+
+                    {% if current_path == 'activite_show' %}
+                        <h1 class="h2">Détails d'une activité</h1>
+                    {% endif %}
+
+                    {% if current_path == 'activite_delete' %}
+                        <h1 class="h2">Suppression d'une activité</h1>
+                    {% endif %}
+
+
+                    {# COMMENTAIRES #}
+                    {% if current_path == 'commentaires' %}
+                        <h1 class="h2">Liste des commentaires</h1>
+                    {% endif %}
+
+                    {% if current_path == 'commentaires_edit' %}
+                        <h1 class="h2">Edition du commentaire</h1>
+                    {% endif %}
+
+                    {% if current_path == 'commentaires_new' %}
+                        <h1 class="h2">Ajout d'un nouveau commentaire</h1>
+                    {% endif %}
+
+                    {% if current_path == 'commentaires_show' %}
+                        <h1 class="h2">Détails d'un commentaire</h1>
+                    {% endif %}
+
+                    {% if current_path == 'commentaires_delete' %}
+                        <h1 class="h2">Suppression d'un commentaire</h1>
+                    {% endif %}
+
+
+
+                </div>
                 {% block main %}
                     <div class="jumbotron">
                         <h1 class="display-4">Hello, {{ app.user.username }}</h1>
-                        <p class="lead">Bienvenue sur l'administration de PackUp ! Vous pouvez ici consulter toutes informations ratachées à l'application.</p>
+                        <p class="lead">Bienvenue sur l'administration de PackUp ! Vous pouvez ici consulter toutes
+                            informations ratachées à l'application.</p>
                         <hr class="my-4">
-                        <p>Nous vous rappellons que cette section est confidentielle et que seul les administrateurs sont autorisés.</p>
+                        <p>Nous vous rappellons que cette section est confidentielle et que seul les administrateurs
+                            sont autorisés.</p>
                         <a class="btn btn-primary btn-lg" href="#" role="button">Accéder au site PackUp</a>
+                    </div>
+
+                    <div class="row row-cols-1 row-cols-md-2">
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Utilisateurs connectés (10mn) </h5>
+                                    <p class="card-text text-primary font-weight-bold" style="font-size: 50px;">{{ usersConnectes|length }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Comptes créés dans le dernier mois</h5>
+                                    <p class="card-text text-primary font-weight-bold" style="font-size: 50px;">{{ usersMonth|length }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Voyages créés dans le dernier mois</h5>
+                                    <p class="card-text text-primary font-weight-bold" style="font-size: 50px;">{{ voyagesMonth|length }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Commentaires publiés dans le dernier mois</h5>
+                                    <p class="card-text text-primary font-weight-bold" style="font-size: 50px;">{{ commentairesMonth|length }}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 {% endblock main %}

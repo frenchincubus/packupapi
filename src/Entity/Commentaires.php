@@ -55,6 +55,11 @@ class Commentaires
      */
     private $updatedAt;
 
+    public function __construct()
+    {
+        $this->datePublication = new DateTime();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

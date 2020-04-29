@@ -479,4 +479,15 @@ class User implements UserInterface
     {
         $this->setUpdatedAt(new DateTime());
     }
+
+    /**
+     * @return bool
+     */
+    public function isActiveNow()
+    {
+
+        $delay = new DateTime('10 minutes ago');
+
+        return ( $this->lastLogin > $delay );
+    }
 }

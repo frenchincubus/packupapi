@@ -34,6 +34,10 @@ class EtapeController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $etape = new Etape();
         $form = $this->createForm(EtapeType::class, $etape);
         $form->handleRequest($request);
@@ -59,6 +63,10 @@ class EtapeController extends AbstractController
      */
     public function show(Etape $etape): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         return $this->render('etape/show.html.twig', [
             'etape' => $etape,
         ]);
@@ -72,6 +80,10 @@ class EtapeController extends AbstractController
      */
     public function edit(Request $request, Etape $etape): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $form = $this->createForm(EtapeType::class, $etape);
         $form->handleRequest($request);
 
@@ -88,13 +100,17 @@ class EtapeController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="etape_delete", methods={"DELETE"})
+     * @Route("admin/etape/{id}/delete", name="etape_delete", methods={"DELETE"})
      * @param Request $request
      * @param Etape $etape
      * @return Response
      */
     public function delete(Request $request, Etape $etape): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$etape->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($etape);

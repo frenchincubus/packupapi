@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -39,8 +40,8 @@ class AuthController extends AbstractController
             $user->setPassword($passwordEncoder->encodePassword($user,
                 $values->password));
             $user->setRoles($user->getRoles());
-            $user->setDateCreation(new \DateTime());
-            $user->setLastLogin(new \DateTime());
+            $user->setDateCreation(new DateTime());
+            $user->setLastLogin(new DateTime());
             $user->setNom($values->nom);
             $user->setPrenom($values->prenom);
             $user->setAge($values->age);

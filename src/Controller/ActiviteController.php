@@ -36,6 +36,10 @@ class ActiviteController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $activite = new Activite();
         $form = $this->createForm(ActiviteType::class, $activite);
         $form->handleRequest($request);
@@ -61,6 +65,10 @@ class ActiviteController extends AbstractController
      */
     public function show(Activite $activite): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         return $this->render('activite/show.html.twig', [
             'activite' => $activite,
         ]);
@@ -74,6 +82,10 @@ class ActiviteController extends AbstractController
      */
     public function edit(Request $request, Activite $activite): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $form = $this->createForm(ActiviteType::class, $activite);
         $form->handleRequest($request);
 
@@ -97,6 +109,10 @@ class ActiviteController extends AbstractController
      */
     public function delete(Request $request, Activite $activite): Response
     {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login');
+        }
+
         if ($this->isCsrfTokenValid('delete'.$activite->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($activite);

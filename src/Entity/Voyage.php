@@ -74,6 +74,12 @@ class Voyage
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"voyage", "user"})
      */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"voyage", "user"})
+     */
     private $updatedAt;
 
     /**
@@ -128,6 +134,7 @@ class Voyage
 
     public function __construct()
     {
+        $this->createdAt = new DateTime();
         $this->commentaires = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->etapes = new ArrayCollection();
@@ -437,4 +444,24 @@ class Voyage
     {
         $this->setUpdatedAt(new DateTime());
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     * @return Voyage
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+
 }
