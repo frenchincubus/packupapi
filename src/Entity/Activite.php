@@ -69,6 +69,12 @@ class Activite
      */
     private $photo = [];
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"voyage:read", "voyage:write"})
+     */
+    private $idFoursquare;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -176,6 +182,17 @@ class Activite
         return $this;
     }
 
+    public function getIdFoursquare(): ?string
+    {
+        return $this->idFoursquare;
+    }
+
+    public function setIdFoursquare(?string $idFoursquare): self
+    {
+        $this->idFoursquare = $idFoursquare;
+
+        return $this;
+    }
 
 
 }

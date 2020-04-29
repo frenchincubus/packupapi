@@ -56,7 +56,9 @@ class User implements UserInterface
     private $dateCreation;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var Image|null
+     * @ORM\OneToOne(targetEntity="App\Entity\Image")
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="id")
      * @Groups({"user:read", "user:write"})
      * @MaxDepth(1)
      */
@@ -216,12 +218,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getPhoto(): ?string
+    public function getPhoto(): ?Image
     {
         return $this->photo;
     }
 
-    public function setPhoto(?string $photo): self
+    public function setPhoto(?Image $photo): self
     {
         $this->photo = $photo;
 
