@@ -65,7 +65,7 @@ class Image
      * @var string|null
      *
      * @ApiProperty(iri="http://schema.org/contentUrl")
-     * @Groups({"image_read", "user:read"})
+     * @Groups({"image_read", "user:read", "voyage:read"})
      */
     public $contentUrl;
 
@@ -81,7 +81,7 @@ class Image
      * @var string|null
      *
      * @ORM\Column(nullable=true)
-     * @Groups("user:read")
+     * @Groups({"user:read", "voyage:read"})
      */
     public $filePath;
 

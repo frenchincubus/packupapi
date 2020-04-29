@@ -59,7 +59,7 @@ class User implements UserInterface
      * @var Image|null
      * @ORM\OneToOne(targetEntity="App\Entity\Image")
      * @ORM\JoinColumn(nullable=true, referencedColumnName="id")
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read", "user:write", "voyage:read"})
      * @MaxDepth(1)
      */
     private $photo;
