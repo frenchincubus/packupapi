@@ -9,6 +9,7 @@ services:
         volumes:
             - "./public:/var/www/html"
             - "./public/bundles:/var/www/html/public/bundles"
+            - "./public/images/users:/var/www/html/public/images/users"
             - "./default.conf:/etc/nginx/conf.d/default.conf"
         networks: 
             - myapp
@@ -35,7 +36,7 @@ services:
         environment: 
             - MYSQL_ROOT_PASSWORD=root 
             - MYSQL_USER=root 
-            - MYSQL_PASSWORD=root 
+            - MYSQL_PASSWORD=packup-CDNT4 
             - MYSQL_DATABASE=packupapi
         restart: always
         networks: 

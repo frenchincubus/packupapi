@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ApiResource()
@@ -21,73 +22,86 @@ class Etape
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
+     * @MaxDepth(1)
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
+     * @MaxDepth(1)
      */
     private $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
+     * @MaxDepth(1)
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
+     * @MaxDepth(1)
      */
     private $pays;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
+     * @MaxDepth(1)
      */
     private $ville;
 
     /**
      * @ORM\Column(type="array")
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
+     * @MaxDepth(1)
      */
     private $coordinates = [];
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
+     * @MaxDepth(1)
      */
     private $dateDebut;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
+     * @MaxDepth(1)
      */
     private $dateFin;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
+     * @MaxDepth(1)
      */
     private $photo;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
+     * @MaxDepth(1)
      */
     private $budget;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Voyage", inversedBy="etapes")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("voyage:read")
+     * @MaxDepth(1)
      */
     private $voyageId;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Activite", mappedBy="etapeId", orphanRemoval=true)
-     * @Groups("voyage")
+     * @ORM\OneToMany(targetEntity="App\Entity\Activite", mappedBy="etapeId", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @Groups({"voyage:write", "voyage:read"})
+     * @MaxDepth(1)
      */
     private $activites;
 

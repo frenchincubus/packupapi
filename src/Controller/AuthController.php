@@ -82,15 +82,19 @@ class AuthController extends AbstractController
         
         $req = json_decode($request->getContent());
         $user = $repository->findOneByMail($req->email);
-        if ($this->checkCredentials($req, $user, $passwordEncoder))
+        if ($this->checkCredentials($req, $user, $passwordEncoder)){
             return $this->json([
                 'id' => $user->getId(),
                 'email' => $user->getEmail(),
                 'roles' => $user->getRoles()
             ]);
-        else return $this->json([
-            'error' => 'credentials error'
-        ]);
+        }    
+        else {
+            return $this->json([
+                'error' => 'credentials error'
+            ]);
+        }
+
 
     }
 

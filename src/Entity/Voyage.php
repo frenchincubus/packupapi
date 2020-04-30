@@ -10,11 +10,24 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ApiResource(attributes={
- *      "normalization_context"={"groups"={"voyage"}}
- * })
+ *      "normalization_context"={"groups"={"voyage:read"}, "enable_max_depth"=true},
+ *      "denormalization_context"={"groups"={"voyage:write"}}
+ *      },
+ *      collectionOperations={
+ *          "post"={
+ *              "method"="POST",
+ *              "path"="/post_voyage"
+ *          },
+ *          "get"={
+ *              "method"="GET",
+ *              "path"="/voyages"
+ *          }
+ *      }
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\VoyageRepository")
  * @ORM\HasLifecycleCallbacks()
  *
@@ -25,48 +38,57 @@ class Voyage
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"voyage:read", "voyage:write", "user:read"})
+     * @MaxDepth(1)
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"voyage", "user"})
+     * @Groups({"voyage:read", "voyage:write", "user:read"})
+     * @MaxDepth(1)
      */
     private $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"voyage", "user"})
+     * @Groups({"voyage:read", "voyage:write", "user:read"})
+     * @MaxDepth(1)
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"voyage", "user"})
+     * @Groups({"voyage:read", "voyage:write", "user:read"})
+     * @MaxDepth(1)
      */
     private $dateDebut;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"voyage", "user"})
+     * @Groups({"voyage:read", "voyage:write", "user:read"})
+     * @MaxDepth(1)
      */
     private $dateFin;
 
     /**
      * @ORM\Column(type="float", nullable=true)
-     * @Groups({"voyage", "user"})
+     * @Groups({"voyage:read", "voyage:write", "user:read"})
+     * @MaxDepth(1)
      */
     private $budget;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"voyage", "user"})
+     * @Groups({"voyage:read", "voyage:write", "user:read"})
+     * @MaxDepth(1)
      */
     private $photo;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"voyage", "user"})
+     * @Groups({"voyage:read", "voyage:write", "user"})
+     * @MaxDepth(1)
      */
     private $datePublication;
 
@@ -84,19 +106,22 @@ class Voyage
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @Groups({"voyage", "user"})
+     * @Groups({"voyage:read", "voyage:write", "user:read"})
+     * @MaxDepth(1)
      */
     private $priorite;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"voyage", "user"})
+     * @Groups({"voyage:read", "voyage:write", "user:read"})
+     * @MaxDepth(2)
      */
     private $isDeleted;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"voyage", "user"})
+     * @Groups({"voyage:read", "voyage:write", "user:read"})
+     * @MaxDepth(1)
      */
     private $isPublic;
 
@@ -104,31 +129,36 @@ class Voyage
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="voyages")
      * @ORM\JoinColumn(nullable=false)
      * @ApiSubresource
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
+     * @MaxDepth(1)
      */
     private $userId;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Commentaires", mappedBy="voyageId", orphanRemoval=true)
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
+     * @MaxDepth(1)
      */
     private $commentaires;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="voyagesSuivis")
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write"})
+     * @MaxDepth(1)
      */
     private $users;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Etape", mappedBy="voyageId", orphanRemoval=true)
-     * @Groups("voyage")
+     * @ORM\OneToMany(targetEntity="App\Entity\Etape", mappedBy="voyageId", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @Groups({"voyage:read", "voyage:write"})
+     * @MaxDepth(1)
      */
     private $etapes;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @Groups("voyage")
+     * @Groups({"voyage:read", "voyage:write", "user:read"})
+     * @MaxDepth(1)
      */
     private $nbPersonnes;
 

@@ -10,10 +10,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ApiResource(attributes={
- *      "normalization_context"={"groups"={"user"}}
+ *      "normalization_context"={"groups"={"user:read"}, "enable_max_depth"=true},
+ *      "denormalization_context"={"groups"={"user:write"}}
  * })
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
@@ -24,30 +26,35 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"voyage", "user"})
+     * @Groups({"voyage:read", "user:read", "user:write"})
+     * @MaxDepth(1)
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups("user")
+     * @Groups({"user:read", "user:write"})
+     * @MaxDepth(1)
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @MaxDepth(1)
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups("user")
+     * @Groups({"user:read", "user:write"})
+     * @MaxDepth(1)
      */
     private $password;
 
     /**
      * @ORM\Column(type="datetime")
+     * @MaxDepth(1)
      */
     private $dateCreation;
 
@@ -65,50 +72,66 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups("user")
+     * @var Image|null
+     * @ORM\OneToOne(targetEntity="App\Entity\Image")
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="id")
+     * @Groups({"user:read", "user:write", "voyage:read"})
+     * @MaxDepth(1)
      */
     private $photo;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Voyage", mappedBy="userId", orphanRemoval=true)
-     * @Groups("user")
+     * @Groups({"user:read", "user:write"})
+     * @MaxDepth(1)
      */
     private $voyages;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Commentaires", mappedBy="userId", orphanRemoval=true)
+     * @MaxDepth(1)
      */
     private $commentaires;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="users")
+     * @Groups({"user:read", "user:write"})
+     * @MaxDepth(1)
      */
     private $amis;
 
      /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="amis")
+     * @Groups({"user:read", "user:write"})
+     * @MaxDepth(1)
      */
     private $users;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Voyage", inversedBy="users")
+     * @Groups({"user:read", "user:write"})
+     * @MaxDepth(1)
      */
     private $voyagesSuivis;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"voyage", "user", "commentaire"})
+     * @Groups({"voyage:read", "user:read", "user:write", "commentaire"})
+     * @MaxDepth(2)
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"voyage", "user", "commentaire"})
+     * @Groups({"voyage:read", "user:read", "user:write", "commentaire"})
+     * @MaxDepth(2)
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
-     * @Groups("user")
+     * @Groups({"user:read", "user:write"})
+     * @MaxDepth(2)
      */
     private $age;
 
@@ -231,14 +254,12 @@ class User implements UserInterface
         return $this;
     }
 
-
-
-    public function getPhoto(): ?string
+    public function getPhoto(): ?Image
     {
         return $this->photo;
     }
 
-    public function setPhoto(?string $photo): self
+    public function setPhoto(?Image $photo): self
     {
         $this->photo = $photo;
 

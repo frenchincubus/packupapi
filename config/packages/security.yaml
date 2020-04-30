@@ -28,10 +28,13 @@ security:
             pattern:  ^/register
             stateless: true
             anonymous: true
+        get_voyages:
+            pattern: ^/api/voyages
+            anonymous: true
         api:
             pattern: ^/api/
             stateless: true
-            anonymous: true
+            #anonymous: true
             provider: app_user_provider
             guard:
                 authenticators:
@@ -98,3 +101,7 @@ security:
         - { path: '^/admin/voyage/{id}/edit', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
         - { path: '^/admin/voyage/{id}/delete', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
+        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: /api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - { path: ^/api/voyages, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: GET}

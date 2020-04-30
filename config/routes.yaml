@@ -12,6 +12,10 @@ register:
   controller: App\Controller\AuthController::register
   methods: POST
 
+login:
+  path: /login
+  controller: App\Controller\AuthController::login
+
 api:
   path: /api
   controller: App\Controller\AuthController::api
