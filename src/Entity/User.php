@@ -3,14 +3,20 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={
+ *      "normalization_context"={"groups"={"user"}}
+ * })
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -18,11 +24,13 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"voyage", "user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups("user")
      */
     private $email;
 
@@ -34,6 +42,7 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups("user")
      */
     private $password;
 
@@ -43,12 +52,25 @@ class User implements UserInterface
     private $dateCreation;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastLogin;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Groups("user")
+     */
+    private $updatedAt;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("user")
      */
     private $photo;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Voyage", mappedBy="userId", orphanRemoval=true)
+     * @Groups("user")
      */
     private $voyages;
 
@@ -74,16 +96,19 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"voyage", "user", "commentaire"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"voyage", "user", "commentaire"})
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @Groups("user")
      */
     private $age;
 
@@ -94,6 +119,8 @@ class User implements UserInterface
         $this->amis = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->voyagesSuivis = new ArrayCollection();
+        $this->setLastLogin(new DateTime());
+        $this->setDateCreation(new DateTime());
     }
 
     public function getId(): ?int
@@ -174,17 +201,37 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getDateCreation(): ?\DateTimeInterface
+    public function getDateCreation(): ?DateTimeInterface
     {
         return $this->dateCreation;
     }
 
-    public function setDateCreation(\DateTimeInterface $dateCreation): self
+    public function setDateCreation(DateTimeInterface $dateCreation): self
     {
         $this->dateCreation = $dateCreation;
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param mixed $updatedAt
+     * @return User
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+
 
     public function getPhoto(): ?string
     {
@@ -206,6 +253,10 @@ class User implements UserInterface
         return $this->voyages;
     }
 
+    /**
+     * @param Voyage $voyage
+     * @return $this
+     */
     public function addVoyage(Voyage $voyage): self
     {
         if (!$this->voyages->contains($voyage)) {
@@ -216,6 +267,10 @@ class User implements UserInterface
          return $this;
     }
 
+    /**
+     * @param Voyage $voyage
+     * @return $this
+     */
     public function removeVoyage(Voyage $voyage): self
     {
         if ($this->voyages->contains($voyage)) {
@@ -237,6 +292,10 @@ class User implements UserInterface
         return $this->commentaires;
     }
 
+    /**
+     * @param Commentaires $commentaire
+     * @return $this
+     */
     public function addCommentaire(Commentaires $commentaire): self
     {
         if (!$this->commentaires->contains($commentaire)) {
@@ -247,6 +306,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Commentaires $commentaire
+     * @return $this
+     */
     public function removeCommentaire(Commentaires $commentaire): self
     {
         if ($this->commentaires->contains($commentaire)) {
@@ -304,6 +367,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param User $user
+     * @return $this
+     */
     public function removeUser(self $user): self
     {
         if ($this->users->contains($user)) {
@@ -331,6 +398,10 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Voyage $voyagesSuivi
+     * @return $this
+     */
     public function removeVoyagesSuivi(Voyage $voyagesSuivi): self
     {
         if ($this->voyagesSuivis->contains($voyagesSuivi)) {
@@ -372,5 +443,51 @@ class User implements UserInterface
         $this->age = $age;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
+    }
+
+    /**
+     * @param mixed $lastLogin
+     * @return User
+     */
+    public function setLastLogin($lastLogin)
+    {
+        $this->lastLogin = $lastLogin;
+        return $this;
+    }
+
+
+    /**
+     * @return string|null
+     */
+    public function __toString()
+    {
+        return $this->getEmail();
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function DateUpdate()
+    {
+        $this->setUpdatedAt(new DateTime());
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActiveNow()
+    {
+
+        $delay = new DateTime('10 minutes ago');
+
+        return ( $this->lastLogin > $delay );
     }
 }

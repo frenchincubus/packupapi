@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\ActiviteRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Activite
 {
@@ -15,36 +17,43 @@ class Activite
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("voyage")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("voyage")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups("voyage")
      */
     private $description;
 
     /**
      * @ORM\Column(type="array")
+     * @Groups("voyage")
      */
     private $coordinates = [];
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("voyage")
      */
     private $dateDebut;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("voyage")
      */
     private $dateFin;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("voyage")
      */
     private $typeTransport;
 
@@ -56,8 +65,16 @@ class Activite
 
     /**
      * @ORM\Column(type="array", nullable=true)
+     * @Groups("voyage")
      */
     private $photo = [];
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
+
 
     public function getId(): ?int
     {
@@ -166,6 +183,38 @@ class Activite
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
 
+    /**
+     * @param mixed $updatedAt
+     * @return Activite
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function __toString()
+    {
+        return $this->getNom();
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function DateUpdate()
+    {
+        $this->setUpdatedAt(new DateTime());
+    }
 
 }

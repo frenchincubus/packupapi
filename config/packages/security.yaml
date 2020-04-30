@@ -44,6 +44,13 @@ security:
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -54,5 +61,40 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: '^/admin', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+
+#          ACTIVITE
+        - { path: '^/admin/activites', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/activite/new', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/activite/{id}/details', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/activite/{id}/edit', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/activite/{id}/delete', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+
+#          COMMENTAIRES
+        - { path: '^/admin/commentaires', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/commentaire/new', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/commentaire/{id}/details', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/commentaire/{id}/edit', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/commentaire/{id}/delete', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+
+#          ETAPES
+        - { path: '^/admin/etapes', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/etape/new', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/etape/{id}/etape_details', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/etape/{id}/edit', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/etape/{id}/delete', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+
+#          USERS
+        - { path: '^/admin/users', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/user/{id}/details', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/user/new', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/user/{id}/edit', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/user/{id}/delete', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+
+#        VOYAGES
+        - { path: '^/admin/voyages', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/voyage/{id}/details', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/voyage/new', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/voyage/{id}/edit', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: '^/admin/voyage/{id}/delete', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }

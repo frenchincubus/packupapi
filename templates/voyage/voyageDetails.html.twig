@@ -1,0 +1,213 @@
+{% extends 'dashboard/index.html.twig' %}
+
+{% block stylesheetsMain %}{% endblock %}
+
+{% block main %}
+
+    {# ----- TABLEAU INFOS ----- #}
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <th class="text-center" scope="col">id</th>
+            <th class="text-center" scope="col">date de début</th>
+            <th class="text-center" scope="col">date de fin</th>
+            <th class="text-center" scope="col">budget</th>
+            <th class="text-center" scope="col">etapes</th>
+            <th class="text-center" scope="col">activites</th>
+            <th class="text-center" scope="col">date de publication</th>
+            <th class="text-center" scope="col">nb personnes</th>
+            <th class="text-center" scope="col">date de modification</th>
+            <th class="text-center" scope="col">followers</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th class="text-center" scope="row">{{ voyage.id }}</th>
+            <td class="text-center">{{ voyage.dateDebut is empty ? "-" :voyage.dateDebut|date('d/m/y h:i:s')  }}</td>
+            <td class="text-center">{{ voyage.dateFin is empty ? "-" : voyage.dateFin|date('d/m/y h:i:s')  }}</td>
+            <td class="text-center">{{ voyage.budget }} €</td>
+            <td class="text-center">{{ voyage.etapes|length }}</td>
+
+            {% set countActivites = 0 %}
+            {% for etape in voyage.etapes %}
+                {% set countActivites = countActivites + etape.activites|length %}
+            {% endfor %}
+            <td class="text-center">{{ countActivites }}</td>
+
+            <td class="text-center">{{ voyage.datePublication is empty ? "-" : voyage.datePublication|date('d/m/y h:i:s') }}</td>
+            <td class="text-center">{{ voyage.nbPersonnes }}</td>
+            <td class="text-center">{{ voyage.updatedAt is empty ? "-" : voyage.updatedAt|date('d/m/y h:i:s')}}</td>
+            <td class="text-center">{{ voyage.users|length}}</td>
+        </tr>
+
+        </tbody>
+    </table>
+    {# ----- TABLEAU INFOS ----- #}
+
+    {# ----- PRESENTATION VOYAGE ----- #}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">{{ voyage.name }}<span><img src="{{ voyage.photo }}" class="img-thumbnail float-right" style="width: 150px;"></span></h1>
+
+            <p class="lead">{{ voyage.description is empty ? "": voyage.description }}</p>
+            <p class="lead"><strong>Utilisateur: </strong> {{ voyage.userId.nom }} {{ voyage.userId.prenom }}</p>
+
+            <a class="btn btn-primary" href="{{ path('voyage_edit', {'id': voyage.id}) }}">Editer le voyage</a>
+        </div>
+
+    </div>
+    {# ----- FIN PRESENTATION VOYAGE ----- #}
+
+    <div class="row">
+
+       {# ----- LISTE MENU ----- #}
+        <div class="col-4">
+            <div class="list-group" id="list-tab" role="tablist">
+                <a class="list-group-item list-group-item-action active" id="list-followers-list" data-toggle="list" href="#list-followers" role="tab" aria-controls="followers">
+                    Followers
+                    <span class="float-right">{{ voyage.users|length }}</span>
+                </a>
+
+                {% for key,etape in etapes %}
+                    {% set counter = ( counter | default(0) ) + 1 %}
+                    <a class="list-group-item list-group-item-action" id="list-{{ key ~ etape.id}}-list" data-toggle="list" href="#list-{{ key ~ etape.id}}" role="tab" aria-controls="{{ key ~ etape.id}}">
+                        {{'Etape ' ~ counter }} <span class="float-right">{{ etape.dateDebut|date('d/m/y') }}</span>
+                    </a>
+                {% endfor %}
+                <a class="list-group-item list-group-item-action" id="list-commentaires-list" data-toggle="list" href="#list-commentaires" role="tab" aria-controls="commentaires">
+                    Commentaires
+                    <span class="float-right">{{ voyage.commentaires|length }}</span>
+                </a>
+
+            </div>
+        </div>
+        {# ----- FIN LISTE MENU ----- #}
+
+        <div class="col-8">
+            <div class="tab-content" id="nav-tabContent">
+
+                {# ----- FOLLOWERS ----- #}
+                <div class="tab-pane fade show active" id="list-followers" role="tabpanel" aria-labelledby="list-followers-list">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="text-center" scope="col">id</th>
+                            <th class="text-center" scope="col">nom prenom</th>
+                            <th class="text-center" scope="col">email</th>
+                            <th class="text-center" scope="col">derniere connexion</th>
+                            <th class="text-center" scope="col">actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for follower in voyage.users %}
+                        <tr>
+                            <th class="text-center" scope="row">{{ follower.id }}</th>
+                            <td class="text-center">{{ follower.nom }} {{ follower.prenom }}</td>
+                            <td class="text-center">{{ follower.email }}</td>
+                            <td class="text-center">{{ follower.lastLogin is empty ? "-" : follower.lastLogin|date('d/m/yy h:i:s') }}</td>
+                            <td class="text-center"><a href="{{ path('user_details', {id:follower.id}) }}"><span class="badge badge-warning">consulter</span></a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {# ----- FIN FOLLOWERS ----- #}
+
+                {# ----- ETAPES ----- #}
+                {% for key,etape in etapes %}
+                    <div class="tab-pane fade" id="list-{{ key ~ etape.id}}" role="tabpanel" aria-labelledby="list-{{ key ~ etape.id}}-list">
+                        <div class="alert alert-secondary" role="alert">
+                            <h5>
+                                {{ etape.name }} ({{ etape.pays ~ " - " ~ etape.ville }}) {{ " - " ~ etape.budget ~ "€" }}
+                                <a href="{{ path('etape_edit',{id:etape.id}) }}"><span class="badge badge-warning">Editer</span></a>
+                                <span class="float-right">
+                                    <img src="{{ etape.photo }}" alt="{{ etape.photo }}" class="img-thumbnail" style="width: 50px;">
+                                </span>
+                            </h5>
+                        </div>
+                        <div class="mt-3">
+                            <p>
+                                {{ "Départ " ~ etape.dateDebut|date('d/m/y h:i:s') }}
+                                <span class="float-right">
+                                    {{ "Fin " ~ etape.dateFin|date('d/m/y h:i:s') }}
+                                </span>
+                            </p>
+                        </div>
+                        <div class="alert alert-light" role="alert">
+                            {{ etape.description }}
+                        </div>
+
+
+                        {# ----- ACTIVITES ----- #}
+                        <div class="row">
+                            {% for activite in etape.activites %}
+                                {% set counter2 = ( counter2 | default(0) ) + 1 %}
+                                <div class="col-sm-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ "Activité " ~ counter2 ~" - "~ activite.nom }}<a href="{{ path('activite_edit', {'id': activite.Id}) }}"><span class="badge badge-warning float-right">Editer</span></a></h5>
+
+                                            <p>
+                                                <small>
+                                                    {{ "Départ " ~ activite.dateDebut|date('d/m/y h:i:s') }}
+                                                    <span class="float-right">{{ "Fin " ~ activite.dateFin|date('d/m/y h:i:s') }}</span>
+                                                </small>
+                                            </p>
+                                            <p class="card-text"> {{ "Transport: " ~ activite.typeTransport }}</p>
+                                            <p class="card-text">{{ activite.description }}</p>
+                                            {% for photo in activite.photo %}
+                                                <img src="{{ photo }}" alt="{{ photo }}" class="img-thumbnail ml-2" style="width: 50px;">
+                                            {% endfor %}
+                                            <p class="card-text"><small class="text-muted">
+                                                    {{ activite.updatedAt is empty ? "" : "Dernière modification le" ~ activite.updatedAt| date('d/m/y h:i:s') }}</small></p>
+{#                                            <a href="#" class="btn btn-primary">Go somewhere</a>#}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        {# ---- FIN ACTIVITES ---- #}
+
+                    </div>
+                {% endfor %}
+                {# ----- FIN ETAPES ----- #}
+
+                {# ----- COMMENTAIRES ----- #}
+                <div class="tab-pane fade show" id="list-commentaires" role="tabpanel" aria-labelledby="list-commentaires-list">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">id</th>
+                            <th scope="col">utilisateur</th>
+                            <th scope="col">Commentaire</th>
+                            <th scope="col">date de publication</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for commentaire in voyage.commentaires %}
+                            <tr>
+                                <th scope="row">{{ commentaire.id }}</th>
+                                <td>{{ commentaire.userId.nom ~" " ~ commentaire.userId.prenom }}</td>
+                                <td>{{ commentaire.message }}</td>
+                                <td>{{ commentaire.datePublication|date('d/m/y h:i:s') }}</td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+
+                {# ----- FIN COMMENTAIRES ----- #}
+
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+
+{% endblock %}
+
+{% block javascriptsMain %}
+
+
+{% endblock %}

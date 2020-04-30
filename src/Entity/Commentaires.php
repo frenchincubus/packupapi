@@ -3,11 +3,17 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={
+ *      "normalization_context"={"groups"={"commentaire"}}
+ * })
  * @ORM\Entity(repositoryClass="App\Repository\CommentairesRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Commentaires
 {
@@ -15,11 +21,13 @@ class Commentaires
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("commentaire")
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"commentaire", "user", "voyage"})
      */
     private $message;
 
@@ -31,6 +39,7 @@ class Commentaires
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="commentaires")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"user","commentaire", "voyage"})
      */
     private $userId;
 
@@ -39,6 +48,17 @@ class Commentaires
      * @ORM\JoinColumn(nullable=false)
      */
     private $voyageId;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"user","commentaire", "voyage"})
+     */
+    private $updatedAt;
+
+    public function __construct()
+    {
+        $this->datePublication = new DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -57,12 +77,12 @@ class Commentaires
         return $this;
     }
 
-    public function getDatePublication(): ?\DateTimeInterface
+    public function getDatePublication(): ?DateTimeInterface
     {
         return $this->datePublication;
     }
 
-    public function setDatePublication(\DateTimeInterface $datePublication): self
+    public function setDatePublication(DateTimeInterface $datePublication): self
     {
         $this->datePublication = $datePublication;
 
@@ -91,5 +111,31 @@ class Commentaires
         $this->voyageId = $voyageId;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param mixed $updatedAt
+     * @return Commentaires
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function DateUpdate()
+    {
+        $this->setUpdatedAt(new DateTime());
     }
 }

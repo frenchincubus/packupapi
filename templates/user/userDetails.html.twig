@@ -1,0 +1,285 @@
+{% extends 'dashboard/index.html.twig' %}
+
+{% block stylesheetsMain %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
+{% endblock %}
+
+{% block main %}
+
+    <div class="bootstrap snippet">
+        <div class="row">
+            <div class="col-sm-10">
+                <h1>{{ user.email }}</h1>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-3"><!--left col-->
+                <span><img src="{{ user.photo }}" alt="..." class="img-thumbnail mx-auto" style="width: 150px;"></span>
+
+                {# ----- PROFIL ----- #}
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-secondary"><strong>Profil</strong> <a href="{{ path('user_edit', {'id': user.id}) }}"><span class="badge badge-success float-right">Editer</span></a></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Id: <span>{{ user.id }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Nom Prénom:  <span>{{ user.nom }} {{ user.prenom }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Créé le: <span> {{ user.dateCreation is empty ? "-" : user.dateCreation | date('d/m/y à h:i:s') }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Rôles: <span>{{ user.roles|join('|') }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Age: <span>{{ user.age }} ans</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">Dernière connexion: <span>{{ user.lastLogin is empty ? "-" : user.lastLogin|date('d/m/y à h:i:s') }}</span></li>
+
+                </ul>
+                <br>
+
+               {# ----- ACTIVITE ----- #}
+                <ul class="list-group mb-5">
+                    <li class="list-group-item list-group-item-secondary"><strong>Activité</strong> <i class="fa fa-dashboard fa-1x"></i></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center"><span class="pull-left">Voyages</span><span class="badge badge-primary">{{ user.voyages|length }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center"><span class="pull-left">Voyages suivis</span><span class="badge badge-danger">{{ user.voyagesSuivis|length }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center"><span class="pull-left">Amis </span><span class="badge badge-success">{{ user.users|length }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center"><span class="pull-left">Followers</span><span class="badge badge-info">{{ user.amis|length }}</span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center"><span class="pull-left">Commentaires</span><span class="badge badge-warning">{{ user.commentaires|length }}</span></li>
+                </ul>
+                <br>
+
+            </div><!--/col-3-->
+            <div class="col-sm-9">
+
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-voyages-tab" data-toggle="tab" href="#nav-voyages" role="tab" aria-controls="nav-voyages" aria-selected="true">Voyages</a>
+                        <a class="nav-item nav-link" id="nav-voyagesSuivis-tab" data-toggle="tab" href="#nav-voyagesSuivis" role="tab" aria-controls="nav-voyagesSuivis" aria-selected="true">Voyages suivis</a>
+                        <a class="nav-item nav-link" id="nav-amis-tab" data-toggle="tab" href="#nav-amis" role="tab" aria-controls="nav-amis" aria-selected="false">Amis</a>
+                        <a class="nav-item nav-link" id="nav-followers-tab" data-toggle="tab" href="#nav-followers" role="tab" aria-controls="nav-followers" aria-selected="false">Followers</a>
+                        <a class="nav-item nav-link" id="nav-commentaires-tab" data-toggle="tab" href="#nav-commentaires" role="tab" aria-controls="nav-commentaires" aria-selected="false">Commentaires</a>
+                    </div>
+                </nav>
+
+                <div class="tab-content" id="nav-tabContent">
+
+                    {# ----- AMIS ----- #}
+                    <div class="tab-pane fade" id="nav-amis" role="tabpanel" aria-labelledby="nav-amis-tab">
+
+                        <br>
+                        <div>
+                            <table id="amis" class="display" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">nom prenom</th>
+
+                                    <th scope="col">email</th>
+                                    <th scope="col">actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for ami in user.users %}
+                                    <tr>
+                                        <th scope="row">{{ ami.id }}</th>
+                                        <td>{{ ami.prenom}} {{ ami.nom }}</td>
+                                        <td>{{ ami.email }}</td>
+                                        <td><a href="{{ path('user_details',{id:ami.id}) }}"><span class="badge badge-warning">consulter</span></a></td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    {# ----- FIN AMIS ----- #}
+
+                    {# ----- FOLLOWERS ----- #}
+                    <div class="tab-pane fade" id="nav-followers" role="tabpanel" aria-labelledby="nav-followers-tab">
+                        <br>
+                        <div>
+                            <table id="followers" class="display" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">nom prenom</th>
+
+                                    <th scope="col">email</th>
+                                    <th scope="col">actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for follower in user.amis %}
+                                    <tr>
+                                        <th scope="row">{{ follower.id }}</th>
+                                        <td>{{ follower.prenom}} {{ follower.nom }}</td>
+                                        <td>{{ follower.email }}</td>
+                                        <td>
+                                            <a href="{{ path('user_details',{id:follower.id}) }}"><span class="badge badge-warning">consulter</span></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {# ----- FIN FOLLOWERS ----- #}
+
+                    {# ----- VOYAGES ----- #}
+                    <div class="tab-pane fade show active" id="nav-voyages" role="tabpanel" aria-labelledby="nav-voyages-tab">
+                        <br>
+                        <div>
+                            <table id="voyages" class="display" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">nom</th>
+
+                                    <th scope="col">début</th>
+                                    <th scope="col">fin</th>
+                                    <th scope="col">publication</th>
+                                    <th scope="col">status</th>
+                                    <th scope="col">public</th>
+                                    <th scope="col">actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for voyage in user.voyages %}
+                                    <tr>
+                                        <th scope="row">{{ voyage.id }}</th>
+                                        <td>{{ voyage.name }}</td>
+                                        <td>{{ voyage.dateDebut is empty ? "-" : voyage.dateDebut|date('d/m/y h:i:s') }}</td>
+                                        <td>{{ voyage.dateFin is empty ? "-" :  voyage.dateFin|date('d/m/y h:i:s') }}</td>
+                                        <td>{{ voyage.datePublication is empty ? "-" : voyage.datePublication|date('d/m/y h:i:s') }}</td>
+
+                                        {% if voyage.isDeleted %}
+                                            <td><span class="badge badge-danger">supprimé</span></td>
+                                        {% else %}
+                                            <td><span class="badge badge-success">actif</span></td>
+                                        {% endif %}
+
+                                        {% if voyage.isPublic %}
+                                            <td><span class="badge badge-primary">public</span></td>
+                                        {% else %}
+                                            <td><span class="badge badge-warning">no public</span></td>
+                                        {% endif %}
+                                        <td>
+                                            <a href="{{ path('voyage_details',{id:voyage.id}) }}"><span class="badge badge-warning">consulter</span></a>
+                                            <a href="{{ path('voyage_edit', {'id': voyage.id}) }}"><span class="badge badge-success">Editer</span></a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {# ----- FIN VOYAGES ----- #}
+
+                    <div class="tab-pane fade" id="nav-voyagesSuivis" role="tabpanel" aria-labelledby="nav-voyagesSuivis-tab">
+                        <br>
+                        <div>
+                            <table id="voyagesSuivis" class="display" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">nom</th>
+
+                                    <th scope="col">début</th>
+                                    <th scope="col">fin</th>
+                                    <th scope="col">publication</th>
+                                    <th scope="col">status</th>
+                                    <th scope="col">public</th>
+                                    <th scope="col">actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for voyagesuivi in user.voyagesSuivis %}
+                                    <tr>
+                                        <th scope="row">{{ voyagesuivi.id }}</th>
+                                        <td>{{ voyagesuivi.name }}</td>
+                                        <td>{{ voyagesuivi.dateDebut | date('d/m/y h:i:s') }}</td>
+                                        <td>{{ voyagesuivi.dateFin | date('d/m/y h:i:s') }}</td>
+                                        <td>{{ voyagesuivi.datePublication | date('d/m/y h:i:s') }}</td>
+
+                                        {% if voyagesuivi.isDeleted %}
+                                            <td><span class="badge badge-danger">supprimé</span></td>
+                                        {% else %}
+                                            <td><span class="badge badge-success">actif</span></td>
+                                        {% endif %}
+
+                                        {% if voyagesuivi.isPublic %}
+                                            <td><span class="badge badge-primary">public</span></td>
+                                        {% else %}
+                                            <td><span class="badge badge-warning">no public</span></td>
+                                        {% endif %}
+                                        <td><a href="{{ path('voyage_details',{id:voyagesuivi.id}) }}"><span class="badge badge-warning">consulter</span></a></td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+                    {# ----- COMMENTAIRES ----- #}
+                    <div class="tab-pane fade" id="nav-commentaires" role="tabpanel" aria-labelledby="nav-commentaires-tab">
+
+                        <br>
+                        <div>
+                            <table id="commentaires" class="display" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">Voyage</th>
+                                    <th scope="col">publication</th>
+                                    <th scope="col">actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for commentaire in user.commentaires %}
+                                    <tr>
+                                        <th scope="row">{{ commentaire.id }}</th>
+                                        <td>{{ commentaire.voyageId.name }}</td>
+                                        <td>{{ commentaire.datePublication | date('d/m/y h:i:s') }}</td>
+                                        <td>
+                                            <a href="{{ path('voyage_details',{id:commentaire.voyageId.id}) }}"><span class="badge badge-primary">consulter voyage</span></a>
+                                            <a href=""><span class="badge badge-success">editer</span></a>
+                                        </td>
+
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {# ----- FIN COMMENTAIRES ----- #}
+
+                </div>
+
+            </div><!--/tab-content-->
+
+        </div><!--/col-9-->
+    </div><!--/row-->
+
+
+{% endblock %}
+
+{% block javascriptsMain %}
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#voyages').DataTable();
+        } );
+        $(document).ready(function() {
+            $('#commentaires').DataTable();
+        } );
+        $(document).ready(function() {
+            $('#amis').DataTable();
+        } );
+        $(document).ready(function() {
+            $('#followers').DataTable();
+        } );
+        $(document).ready(function() {
+            $('#voyagesSuivis').DataTable();
+        } );
+    </script>
+{% endblock %}
+

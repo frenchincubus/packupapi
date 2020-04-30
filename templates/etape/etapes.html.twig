@@ -1,0 +1,61 @@
+{% extends 'dashboard/index.html.twig' %}
+
+{% block stylesheetsMain %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
+{% endblock %}
+
+{% block main %}
+
+    <div>
+        <table id="example" class="display" style="width:100%">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">nom</th>
+                <th scope="col">voyage</th>
+                <th scope="col">utilisateur</th>
+                <th scope="col">début</th>
+                <th scope="col">fin</th>
+                <th scope="col">pays</th>
+                <th scope="col">ville</th>
+                <th scope="col">actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for etape in etapes %}
+                <tr>
+                    <th scope="row">{{ etape.id }}</th>
+                    <td>{{ etape.name }}</td>
+                    <td>{{ etape.voyageId.name }}</td>
+                    <td>{{ etape.voyageId.userId.username }}</td>
+                    <td>{{ etape.dateDebut | date('d/m/y h:i:s') }}</td>
+                    <td>{{ etape.dateFin | date('d/m/y h:i:s') }}</td>
+                    <td>{{ etape.pays }}</td>
+                    <td>{{ etape.ville }}</td>
+                    <td>
+                        <a href="{{ path('etape_show',{id:etape.id}) }}"><span class="badge badge-warning">consulter</span></a>
+                        <a href="{{ path('etape_edit', {'id': etape.id}) }}"><span class="badge badge-success">Editer</span></a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <a class="btn btn-primary" href="{{ path('etape_new') }}">Ajouter une étape</a>
+    </div>
+    <br>
+
+{% endblock %}
+
+{% block javascriptsMain %}
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable();
+        });
+    </script>
+
+{% endblock %}

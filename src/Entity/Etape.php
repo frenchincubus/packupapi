@@ -3,13 +3,17 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\EtapeRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Etape
 {
@@ -17,51 +21,61 @@ class Etape
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups("voyage")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("voyage")
      */
     private $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups("voyage")
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups("voyage")
      */
     private $pays;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("voyage")
      */
     private $ville;
 
     /**
      * @ORM\Column(type="array")
+     * @Groups("voyage")
      */
     private $coordinates = [];
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("voyage")
      */
     private $dateDebut;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups("voyage")
      */
     private $dateFin;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("voyage")
      */
     private $photo;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Groups("voyage")
      */
     private $budget;
 
@@ -73,8 +87,16 @@ class Etape
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Activite", mappedBy="etapeId", orphanRemoval=true)
+     * @Groups("voyage")
      */
     private $activites;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
+
 
     public function __construct()
     {
@@ -146,24 +168,24 @@ class Etape
         return $this;
     }
 
-    public function getDateDebut(): ?\DateTimeInterface
+    public function getDateDebut(): ?DateTimeInterface
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(\DateTimeInterface $dateDebut): self
+    public function setDateDebut(DateTimeInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
-    public function getDateFin(): ?\DateTimeInterface
+    public function getDateFin(): ?DateTimeInterface
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(\DateTimeInterface $dateFin): self
+    public function setDateFin(DateTimeInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
 
@@ -207,6 +229,26 @@ class Etape
     }
 
     /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param mixed $updatedAt
+     * @return Etape
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+
+
+    /**
      * @return Collection|Activite[]
      */
     public function getActivites(): Collection
@@ -235,5 +277,21 @@ class Etape
         }
 
         return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function DateUpdate()
+    {
+        $this->setUpdatedAt(new DateTime());
     }
 }

@@ -40,6 +40,8 @@ services:
         restart: always
         networks: 
             - myapp
+        volumes:
+            - db-data:/var/lib/mysql
     myadmin:
         container_name: phpmyadmin
         image: phpmyadmin/phpmyadmin
@@ -52,6 +54,9 @@ services:
             - db
         networks: 
             - myapp
+volumes:
+  db-data:
+
 networks: 
     myapp: 
         driver: bridge

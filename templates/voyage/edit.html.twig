@@ -1,0 +1,14 @@
+{% extends 'dashboard/index.html.twig' %}
+
+{% block title %}Edit Voyage{% endblock %}
+
+{% block main %}
+
+    {{ include('voyage/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <br>
+    {{ include('voyage/_delete_form.html.twig') }}
+    <br>
+    <a class="btn btn-primary" href="{{ path('voyages') }}">Retourner à la liste des voyages</a>
+    <br>
+    <br>
+{% endblock %}

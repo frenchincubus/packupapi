@@ -1,0 +1,51 @@
+{{ form_start(form) }}
+
+<div class="form-row">
+    <div class="form-group col-md-6">
+        {{ form_label(form.email,'Email') }}
+        {{ form_widget(form.email, {'attr':{'class':'form-control'}}) }}
+        {{ form_errors(form.email,{'attr':{'class':'alert-danger'}}) }}
+    </div>
+    <div class="form-group col-md-6">
+        {{ form_label(form.password,'Password') }}
+        {{ form_widget(form.password, {'attr':{'class':'form-control'}}) }}
+        {{ form_errors(form.password,{'attr':{'class':'alert-danger'}}) }}
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        {{ form_label(form.nom,'Nom') }}
+        {{ form_widget(form.nom,{'attr':{'class':'form-control'}}) }}
+        {{ form_errors(form.nom,{'attr':{'class':'alert-danger'}}) }}
+    </div>
+    <div class="form-group col-md-6">
+        {{ form_label(form.prenom,'Prenom') }}
+        {{ form_widget(form.prenom,{'attr':{'class':'form-control'}}) }}
+        {{ form_errors(form.prenom,{'attr':{'class':'alert-danger'}}) }}
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-2">
+        {{ form_label(form.age,'Age') }}
+        {{ form_widget(form.age,{'attr':{'class':'form-control'}}) }}
+        {{ form_errors(form.age,{'attr':{'class':'alert-danger'}}) }}
+    </div>
+
+    <div class="form-group col-md-4">
+        {{ form_label(form.roles,'Age') }}
+        {{ form_widget(form.roles,{'attr':{'class':'form-control'}}) }}
+        {{ form_errors(form.roles,{'attr':{'class':'alert-danger'}}) }}
+    </div>
+
+    <div class="form-group col-md-6">
+
+        {% if user.photo %}
+            <label>Photo</label><br>
+            <span class=""><img src="{{ user.photo }}" alt="photo {{ user.nom ~ " " ~ user.prenom }}" class="img-thumbnail" style="width: 150px;"></span>
+        {% endif %}
+    </div>
+</div>
+
+<button class="btn btn-success">{{ button_label|default('Valider',{'attr':{'class':'btn btn-success'}}) }}</button>
+
+{{ form_end(form) }}

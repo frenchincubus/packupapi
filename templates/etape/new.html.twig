@@ -1,0 +1,9 @@
+{% extends 'dashboard/index.html.twig' %}
+
+{% block main %}
+    {{ include('etape/_form.html.twig') }}
+
+    <br>
+    <a class="btn btn-primary" href="{{ path('etapes') }}">Retourner à la liste des étapes</a>
+    <br>
+{% endblock %}

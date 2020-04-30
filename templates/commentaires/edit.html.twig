@@ -1,0 +1,14 @@
+{% extends 'dashboard/index.html.twig' %}
+
+{% block main %}
+
+    {{ include('commentaires/_form.html.twig', {'button_label': 'Modifier'}) }}
+    <br>
+
+    {{ include('commentaires/_delete_form.html.twig') }}
+    <br>
+
+    <a class="btn btn-primary" href="{{ path('commentaires') }}">Retourner à la liste des commentaires</a>
+    <br>
+    <br>
+{% endblock %}
