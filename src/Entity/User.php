@@ -70,7 +70,6 @@ class User implements UserInterface
     private $updatedAt;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups("user")
      * @var Image|null
      * @ORM\OneToOne(targetEntity="App\Entity\Image")
