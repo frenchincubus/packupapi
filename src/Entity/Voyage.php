@@ -79,7 +79,9 @@ class Voyage
     private $budget;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var ImageVoyage|null
+     * @ORM\ManyToOne(targetEntity="App\Entity\ImageVoyage")
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="id")
      * @Groups({"voyage:read", "voyage:write", "user:read"})
      * @MaxDepth(1)
      */
@@ -236,12 +238,12 @@ class Voyage
         return $this;
     }
 
-    public function getPhoto(): ?string
+    public function getPhoto(): ?ImageVoyage
     {
         return $this->photo;
     }
 
-    public function setPhoto(?string $photo): self
+    public function setPhoto(?ImageVoyage $photo): self
     {
         $this->photo = $photo;
 

@@ -77,8 +77,10 @@ class Etape
     private $dateFin;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"voyage:read", "voyage:write"})
+     * @var ImageVoyage|null
+     * @ORM\ManyToOne(targetEntity="App\Entity\ImageVoyage")
+     * @ORM\JoinColumn(nullable=true, referencedColumnName="id")
+     * @Groups({"voyage:read", "voyage:write", "user:read"})
      * @MaxDepth(1)
      */
     private $photo;
@@ -206,12 +208,12 @@ class Etape
         return $this;
     }
 
-    public function getPhoto(): ?string
+    public function getPhoto(): ?ImageVoyage
     {
         return $this->photo;
     }
 
-    public function setPhoto(?string $photo): self
+    public function setPhoto(?ImageVoyage $photo): self
     {
         $this->photo = $photo;
 
